@@ -1,0 +1,15 @@
+BlogBundle\Entity\Signalement_Commentaire:
+    type: entity
+    table: null
+    repositoryClass: BlogBundle\Repository\Signalement_CommentaireRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        contenu:
+            type: text
+            column: Contenu
+    lifecycleCallbacks: {  }

@@ -1,0 +1,18 @@
+BlogBundle\Entity\Commentaire:
+    type: entity
+    table: null
+    repositoryClass: BlogBundle\Repository\CommentaireRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        contenu:
+            type: text
+            column: Contenu
+        date:
+            type: datetime
+            column: Date
+    lifecycleCallbacks: {  }

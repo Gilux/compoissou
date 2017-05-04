@@ -1,0 +1,15 @@
+BlogBundle\Entity\Notes:
+    type: entity
+    table: null
+    repositoryClass: BlogBundle\Repository\NotesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        note:
+            type: integer
+            column: Note
+    lifecycleCallbacks: {  }

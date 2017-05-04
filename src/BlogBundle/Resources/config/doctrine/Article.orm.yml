@@ -1,0 +1,25 @@
+BlogBundle\Entity\Article:
+    type: entity
+    table: null
+    repositoryClass: BlogBundle\Repository\ArticleRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        titre:
+            type: string
+            length: 255
+            column: Titre
+        contenu:
+            type: text
+            column: Contenu
+        dateCreation:
+            type: datetime
+            column: Date_creation
+        dateModif:
+            type: datetime
+            column: Date_modif
+    lifecycleCallbacks: {  }

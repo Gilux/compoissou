@@ -1,3 +1,0 @@
-projetblog_homepage:
-    path:     /
-    defaults: { _controller: ProjetblogBundle:Default:index }

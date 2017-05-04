@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}BlogBundle:UtilisateurController:profil{% endblock %}
+
+{% block body %}
+<h1>
+    {% if(id) %}
+            Gérer le profil de l'utilisateur {{ id }}
+    {% else %}
+            Gérer mon profil
+    {% endif %}
+</h1>
+{% endblock %}

@@ -1,3 +1,21 @@
 blog_homepage:
     path:     /
     defaults: { _controller: BlogBundle:Default:index }
+
+signalements_list:
+    path:     /signalements/list
+    defaults: { _controller: BlogBundle:Signalement:list }
+
+signalements_add:
+    path:     /signalements/add
+    defaults: { _controller: BlogBundle:Signalement:add }
+
+utilisateur_profil:
+    path:     utilisateurs/profil/{id}
+    defaults:
+        _controller: BlogBundle:Utilisateur:profil
+        id: null
+
+thematiques_list:
+    path:     /thematiques/list
+    defaults: { _controller: BlogBundle:Thematique:list }

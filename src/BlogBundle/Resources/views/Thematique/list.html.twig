@@ -1,0 +1,73 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}BlogBundle:Thematique:list{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/chosen.min.css') }}" />
+{% endblock %}
+
+{% block body %}
+<h1>Mes thématiques</h1>
+    <form>
+        <select multiple name="listeThemes">
+            {% for advert in listeThemes %}
+                <option value="{{ advert.id }}">{{ advert.nom }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Catégorie</th>
+                <th>Expert en cette catégorie ?</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/chosen.jquery.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.84/jsrender.js"></script>
+    <script id="theTmpl" type="text/x-jsrender">
+        <tr>
+           <td>Name: <%: name %></td>
+           <td></td>
+           <td><input type="checkbox"></input></td>
+        </div>
+    </script>
+
+    <script>
+        $(function(){
+            $("select").chosen();
+        });
+
+        $("select").change(function(){
+            console.log("lel");
+
+            $.views.settings.delimiters("<%", "%>");
+
+            var data = [];
+            $('select :selected').each(function(i, selected){
+                data[i] = {
+                    "name": $(selected).text(),
+                    "nickname": $(selected).text(),
+                    "showNickname": true
+                };
+            });
+
+            var template = $.templates("#theTmpl");
+
+            var htmlOutput = template.render(data);
+
+            $("tbody").html(htmlOutput);
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,16 @@
+BlogBundle\Entity\Theme:
+    type: entity
+    table: null
+    repositoryClass: BlogBundle\Repository\ThemeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nom:
+            type: string
+            length: 255
+            column: Nom
+    lifecycleCallbacks: {  }

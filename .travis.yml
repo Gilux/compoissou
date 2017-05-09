@@ -31,9 +31,9 @@ before-install:
 install:
   - composer install
   - cp app/config/parameters.yml.travis app/config/parameters.yml
-  - php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:create --env=test
-  #- php bin/console doctrine:fixtures:load -n --env=test
+  - php bin/console doctrine:database:create --env=dev
+  #- php bin/console doctrine:schema:create --env=dev
+  #- php bin/console doctrine:fixtures:load -n --env=dev
 
 # After a build, send email notification with the build results
 notifications:

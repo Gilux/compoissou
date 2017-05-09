@@ -27,7 +27,7 @@ matrix:
 
 # Define an environment variable
 env:
-  - SYMFONY_VERSION="3.0.*" DB=mysql
+  - SYMFONY_VERSION="3.2.*" DB=mysql
 
 # Update composer
 before-install:
@@ -37,7 +37,7 @@ before-install:
 # Create database, schema and fixtures
 install:
   - composer install
-  - cp app/config/parameters.yml.dist app/config/parameters.yml
+  - cp app/config/parameters.yml.travis app/config/parameters.yml
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
   - php bin/console doctrine:fixtures:load -n --env=test

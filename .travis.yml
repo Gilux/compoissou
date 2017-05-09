@@ -38,3 +38,8 @@ install:
 # After a build, send email notification with the build results
 notifications:
   email: gilux762@gmail.com
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: "758cffe4-c8f3-4547-9236-1dd53617e9cb"

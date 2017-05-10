@@ -10,4 +10,12 @@
             Gérer mon profil
     {% endif %}
 </h1>
+
+    <p>{{ app.user.username }}</p>
+    <p>Rôles :
+    <ul>
+    {% for role in roles %}
+        <li>{{ role.role }}</li>
+    {% endfor %}
+</ul></p>
 {% endblock %}

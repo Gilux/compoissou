@@ -81,4 +81,3 @@ class Commentaire
         return $this->date;
     }
 }
-

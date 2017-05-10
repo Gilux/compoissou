@@ -139,4 +139,3 @@ class Article
         return $this->dateModif;
     }
 }
-

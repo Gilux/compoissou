@@ -14,29 +14,17 @@
     </head>
     <body>
 
+    {% block testlayout %}
     <div class="container-fluid">
         <div class="row profile">
             <div class="col-md-2">
                 <div class="profile-sidebar">
-                    <!-- SIDEBAR USERPIC -->
-                    <div class="profile-userpic">
-                        <img src="http://image.noelshack.com/fichiers/2016/48/1480366204-risitas-ddb.png" class="img-responsive" alt="">
-                    </div>
-                    <!-- END SIDEBAR USERPIC -->
-                    <!-- SIDEBAR USER TITLE -->
-                    <div class="profile-usertitle">
-                        <div class="profile-usertitle-name">
-                            John Doe
-                        </div>
-                        <div class="profile-usertitle-job">
-                            Critique
-                        </div>
-                    </div>
-                    <!-- END SIDEBAR USER TITLE -->
-                    <!-- SIDEBAR BUTTONS -->
+
+                    {{ render(controller('BlogBundle:Utilisateur:widget')) }}
+
                     <div class="profile-userbuttons">
                         <button type="button" class="btn btn-success btn-sm">Follow</button>
-                        <button type="button" class="btn btn-danger btn-sm">Message</button>
+                        <a class="btn btn-danger btn-sm" href="{{ path("logout") }}">Logout</a>
                     </div>
                     <!-- END SIDEBAR BUTTONS -->
                     <!-- SIDEBAR MENU -->
@@ -91,6 +79,7 @@
             </div>
         </div>
     </div>
+    {% endblock %}
 
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"

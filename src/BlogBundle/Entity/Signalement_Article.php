@@ -52,4 +52,3 @@ class Signalement_Article
         return $this->contenu;
     }
 }
-

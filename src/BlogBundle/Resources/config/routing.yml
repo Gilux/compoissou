@@ -1,5 +1,5 @@
 blog_homepage:
-    path:     /
+    path:     /index
     defaults: { _controller: BlogBundle:Default:index }
 
 signalements_list:
@@ -11,7 +11,7 @@ signalements_add:
     defaults: { _controller: BlogBundle:Signalement:add }
 
 utilisateur_profil:
-    path:     utilisateurs/profil/{id}
+    path:     /utilisateurs/profil/{id}
     defaults:
         _controller: BlogBundle:Utilisateur:profil
         id: null
@@ -19,3 +19,13 @@ utilisateur_profil:
 thematiques_list:
     path:     /thematiques/list
     defaults: { _controller: BlogBundle:Thematique:list }
+
+login:
+    path: /
+    defaults: { _controller: BlogBundle:Security:login }
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout

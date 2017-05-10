@@ -52,4 +52,3 @@ class Signalement_Commentaire
         return $this->contenu;
     }
 }
-

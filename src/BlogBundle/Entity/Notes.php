@@ -52,4 +52,3 @@ class Notes
         return $this->note;
     }
 }
-

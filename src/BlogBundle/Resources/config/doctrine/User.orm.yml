@@ -22,8 +22,14 @@ BlogBundle\Entity\User:
             length: 255
             unique: true
             column: Login
-        mdp:
+        password:
             type: string
             length: 255
-            column: Mdp
+            column: Password
+
+    manyToMany:
+        roles:
+            targetEntity: Role
+            inversedBy: users
+
     lifecycleCallbacks: {  }

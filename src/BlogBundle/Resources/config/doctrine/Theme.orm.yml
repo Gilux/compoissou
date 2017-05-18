@@ -19,4 +19,9 @@ BlogBundle\Entity\Theme:
             targetEntity: Choixtheme
             mappedBy: theme
 
+    manyToMany:
+        article:
+            targetEntity: Article
+            inversedBy: themes
+
     lifecycleCallbacks: {  }

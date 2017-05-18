@@ -40,6 +40,7 @@ class User implements UserInterface, \Serializable
      */
     private $password;
 
+    private $articles;
 
     /**
      * @return mixed
@@ -188,6 +189,7 @@ class User implements UserInterface, \Serializable
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -226,5 +228,27 @@ class User implements UserInterface, \Serializable
     public function getChoixthemes()
     {
         return $this->themeassociation->toArray();;
+    }
+
+    public function addArticle(\BlogBundle\Entity\Article $article)
+    {
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    public function removeArticle(\BlogBundle\Entity\Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    public function __toString()
+    {
+        return $this->prenom;
     }
 }

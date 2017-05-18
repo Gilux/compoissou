@@ -8,6 +8,17 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('BlogBundle:Default:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $retour = array();
+
+        /**
+         * Si l'utilisateur à le ROLE_AUTEUR
+         */
+        $repositoryArticle = $em->getRepository("BlogBundle:Article");
+        $articlesAuteur = $repositoryArticle->findByAuteur($this->getUser()->getId());
+        if(count($articlesAuteur) != 0)
+            $retour = array("articlesAuteur" => $articlesAuteur);
+
+        return $this->render('BlogBundle:Default:index.html.twig', $retour);
     }
 }

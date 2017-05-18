@@ -32,6 +32,18 @@ class Article
      */
     private $dateModif;
 
+    private $auteur;
+
+    private $themes;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -137,5 +149,32 @@ class Article
     public function getDateModif()
     {
         return $this->dateModif;
+    }
+
+    public function getAuteur(){
+        return $this->auteur;
+    }
+
+    public function setAuteur($auteur){
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    public function addTheme(\BlogBundle\Entity\Article $theme)
+    {
+        $this->themes[] = $theme;
+
+        return $this;
+    }
+
+    public function removeTheme(\BlogBundle\Entity\Article $theme)
+    {
+        $this->themes->removeElement($theme);
+    }
+
+    public function getThemes()
+    {
+        return $this->themes;
     }
 }

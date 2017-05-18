@@ -37,4 +37,8 @@ BlogBundle\Entity\User:
             targetEntity: Choixtheme
             mappedBy: user
 
+        articles:
+            targetEntity: Article
+            mappedBy: auteur
+
     lifecycleCallbacks: {  }

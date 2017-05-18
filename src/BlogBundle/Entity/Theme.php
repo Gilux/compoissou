@@ -20,6 +20,8 @@ class Theme
 
     private $themeassociation;
 
+    private $article;
+
     public function __construct()
     {
         $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
@@ -55,6 +57,22 @@ class Theme
      * @return string
      */
     public function getNom()
+    {
+        return $this->nom;
+    }
+
+    public function getArticle(){
+        return $this->article;
+    }
+
+    public function setArticle($article)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    public function __toString()
     {
         return $this->nom;
     }

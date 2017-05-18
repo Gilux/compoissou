@@ -22,4 +22,15 @@ BlogBundle\Entity\Article:
         dateModif:
             type: datetime
             column: Date_modif
+
+    manyToOne:
+        auteur:
+            targetEntity: User
+            inversedBy: articles
+
+    manyToMany:
+        themes:
+            targetEntity: Theme
+            mappedBy: article
+
     lifecycleCallbacks: {  }

@@ -42,6 +42,26 @@ class User implements UserInterface, \Serializable
 
     private $articles;
 
+    private $commentaires;
+
+    private $avatar;
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
     /**
      * @return mixed
      */
@@ -190,6 +210,7 @@ class User implements UserInterface, \Serializable
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -24,9 +24,14 @@ BlogBundle\Entity\Article:
             column: Date_modif
 
     manyToOne:
-        auteur:
+        utilisateur:
             targetEntity: User
             inversedBy: articles
+
+    oneToMany:
+        commentaires:
+            targetEntity: Commentaire
+            mappedBy: article
 
     manyToMany:
         themes:

@@ -26,6 +26,10 @@ BlogBundle\Entity\User:
             type: string
             length: 255
             column: Password
+        avatar:
+            type: string
+            length: 255
+            column: Avatar
 
     manyToMany:
         roles:
@@ -39,6 +43,10 @@ BlogBundle\Entity\User:
 
         articles:
             targetEntity: Article
-            mappedBy: auteur
+            mappedBy: utilisateur
+
+        commentaires:
+            targetEntity: Commentaire
+            mappedBy: utilisateur
 
     lifecycleCallbacks: {  }

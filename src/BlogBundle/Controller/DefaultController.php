@@ -15,7 +15,7 @@ class DefaultController extends Controller
          * Si l'utilisateur à le ROLE_AUTEUR
          */
         $repositoryArticle = $em->getRepository("BlogBundle:Article");
-        $articlesAuteur = $repositoryArticle->findByAuteur($this->getUser()->getId());
+        $articlesAuteur = $repositoryArticle->findByUtilisateur($this->getUser()->getId());
         if(count($articlesAuteur) != 0)
             $retour = array("articlesAuteur" => $articlesAuteur);
 

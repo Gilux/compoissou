@@ -6,14 +6,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleType extends AbstractType
+class UserType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titre')->add('contenu')->add('dateCreation')->add('dateModif')->add('utilisateur')->add('themes');
+        $builder->add('nom')->add('prenom')->add('login')->add('password')->add('roles');
     }
     
     /**
@@ -22,11 +22,7 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BlogBundle\Entity\Article',
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
-            // a unique key to help generate the secret token
-            'csrf_token_id'   => 'task_item',
+            'data_class' => 'BlogBundle\Entity\User'
         ));
     }
 
@@ -35,7 +31,7 @@ class ArticleType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'blogbundle_article';
+        return 'blogbundle_user';
     }
 
 

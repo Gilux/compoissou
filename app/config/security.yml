@@ -13,7 +13,8 @@ security:
         BlogBundle\Entity\User : plaintext
 
     role_hierarchy:
-        ROLE_ADMIN:  ROLE_USER
+        ROLE_ADMIN:  ROLE_CRITIQUE
+        ROLE_CRITIQUE: ROLE_LECTEUR
 
 
     firewalls:
@@ -23,7 +24,7 @@ security:
             security: false
 
         blog:
-            pattern: ^/(index|utilisateur|login_check|logout|signalement|thematiques|article)
+            pattern: ^/(index|utilisateur|login_check|logout|signalement|thematiques|article|commentaires|user)
             form_login:
                 login_path: /
                 check_path: /login_check

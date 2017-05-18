@@ -22,6 +22,49 @@ class Commentaire
      */
     private $date;
 
+    /**
+     * @var User
+     */
+    private $utilisateur;
+
+    /**
+     * @return User
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+
+    /**
+     * @param User $utilisateur
+     */
+    public function setUtilisateur($utilisateur)
+    {
+        $this->utilisateur = $utilisateur;
+    }
+
+    /**
+     * @return Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * @param Article $article
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
+    }
+
+    /**
+     * @var Article
+     */
+    private $article;
+
+
 
     /**
      * Get id

@@ -15,4 +15,13 @@ BlogBundle\Entity\Commentaire:
         date:
             type: datetime
             column: Date
+
+    manyToOne:
+        utilisateur:
+            targetEntity: User
+            inversedBy: commentaires
+
+        article:
+            targetEntity: Article
+            inversedBy: commentaires
     lifecycleCallbacks: {  }

@@ -2,6 +2,10 @@ blog_article:
     resource: "@BlogBundle/Resources/config/routing/article.yml"
     prefix:   /article
 
+blog_user:
+    resource: "@BlogBundle/Resources/config/routing/user.yml"
+    prefix:   /user
+
 blog_homepage:
     path:     /index
     defaults: { _controller: BlogBundle:Default:index }

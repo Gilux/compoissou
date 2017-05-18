@@ -32,9 +32,11 @@ class Article
      */
     private $dateModif;
 
-    private $auteur;
-
     private $themes;
+
+    private $commentaires;
+
+    private $utilisateur;
 
 
     /**
@@ -43,6 +45,7 @@ class Article
     public function __construct()
     {
         $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -151,12 +154,12 @@ class Article
         return $this->dateModif;
     }
 
-    public function getAuteur(){
-        return $this->auteur;
+    public function getUtilisateur(){
+        return $this->utilisateur;
     }
 
-    public function setAuteur($auteur){
-        $this->auteur = $auteur;
+    public function setUtilisateur($utilisateur){
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
@@ -176,5 +179,22 @@ class Article
     public function getThemes()
     {
         return $this->themes;
+    }
+
+    public function addCommentaire(\BlogBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    public function removeCommentaire(\BlogBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }

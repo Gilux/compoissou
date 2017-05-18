@@ -28,6 +28,29 @@
         </tbody>
     </table>
 
+    <h3>Commentaires</h3>
+
+    <ul class="media-list">
+
+    </ul>
+
+    <ul class="media-list">
+        {% for com in article.commentaires %}
+            <li class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{{ com.utilisateur.avatar }}" alt="avatar" style="width:64px; height:64px;">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ com.utilisateur.prenom }} {{ com.utilisateur.nom }} <small>{{ com.date|date("d/m/Y H:i") }}</small></h4>
+                    {{ com.contenu }}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+
     <ul>
         <li>
             <a href="{{ path('article_index') }}">Back to the list</a>

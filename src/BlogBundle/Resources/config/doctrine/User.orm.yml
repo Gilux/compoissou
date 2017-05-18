@@ -32,4 +32,9 @@ BlogBundle\Entity\User:
             targetEntity: Role
             inversedBy: users
 
+    oneToMany:
+        themeassociation:
+            targetEntity: Choixtheme
+            mappedBy: user
+
     lifecycleCallbacks: {  }

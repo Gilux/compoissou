@@ -2,6 +2,7 @@
 
 namespace BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -38,6 +39,7 @@ class User implements UserInterface, \Serializable
      * @var string
      */
     private $password;
+
 
     /**
      * @return mixed
@@ -171,7 +173,13 @@ class User implements UserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $roles;
+    protected $roles;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $themeassociation;
+
 
     /**
      * Constructor
@@ -179,6 +187,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -191,7 +200,6 @@ class User implements UserInterface, \Serializable
     public function addRole(\BlogBundle\Entity\Role $role)
     {
         $this->roles[] = $role;
-
         return $this;
     }
 
@@ -203,5 +211,20 @@ class User implements UserInterface, \Serializable
     public function removeRole(\BlogBundle\Entity\Role $role)
     {
         $this->roles->removeElement($role);
+    }
+
+    public function addChoixtheme(Choixtheme $choixtheme)
+    {
+        $this->themeassociation[] = $choixtheme;
+    }
+
+    public function removeChoixtheme(Choixtheme $choixtheme)
+    {
+        $this->themeassociation->removeElement($choixtheme);
+    }
+
+    public function getChoixthemes()
+    {
+        return $this->themeassociation->toArray();;
     }
 }

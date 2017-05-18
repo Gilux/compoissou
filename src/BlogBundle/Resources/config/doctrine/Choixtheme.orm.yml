@@ -1,0 +1,24 @@
+BlogBundle\Entity\Choixtheme:
+    type: entity
+    table: null
+    repositoryClass: BlogBundle\Repository\ChoixthemeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        expert:
+            type: boolean
+
+    manyToOne:
+        theme:
+            targetEntity: Theme
+            inversedBy: themeassociation
+
+        user:
+            targetEntity: User
+            inversedBy: themeassociation
+
+    lifecycleCallbacks: {  }

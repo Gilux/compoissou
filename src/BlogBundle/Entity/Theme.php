@@ -18,6 +18,13 @@ class Theme
     private $nom;
 
 
+    private $themeassociation;
+
+    public function __construct()
+    {
+        $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -51,4 +58,5 @@ class Theme
     {
         return $this->nom;
     }
+
 }

@@ -13,4 +13,10 @@ BlogBundle\Entity\Theme:
             type: string
             length: 255
             column: Nom
+
+    oneToMany:
+        themeassociation:
+            targetEntity: Choixtheme
+            mappedBy: theme
+
     lifecycleCallbacks: {  }

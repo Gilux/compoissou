@@ -20,6 +20,12 @@ thematiques_list:
     path:     /thematiques/list
     defaults: { _controller: BlogBundle:Thematique:list }
 
+thematiques_search:
+    path:     /thematiques/search/{str}
+    defaults:
+        _controller: BlogBundle:Thematique:search
+        str: null
+
 login:
     path: /
     defaults: { _controller: BlogBundle:Security:login }

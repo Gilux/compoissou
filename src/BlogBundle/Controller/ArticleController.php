@@ -38,6 +38,11 @@ class ArticleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $article->setDateCreation(new \DateTime());
+            $article->setDateModif(new \DateTime());
+            $article->setUtilisateur($this->getUser());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();

@@ -1,67 +1,98 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Article</h1>
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Article</h1>
+        </div>
+    </div>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ article.titre }}</td>
-            </tr>
-            <tr>
-                <th>Contenu</th>
-                <td>{{ article.contenu }}</td>
-            </tr>
-            <tr>
-                <th>Datecreation</th>
-                <td>{% if article.dateCreation %}{{ article.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Datemodif</th>
-                <td>{% if article.dateModif %}{{ article.dateModif|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-xs-6">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Titre</th>
+                        <td>{{ article.titre }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contenu</th>
+                        <td>{{ article.contenu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de création</th>
+                        <td>{% if article.dateCreation %}{{ article.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de modification</th>
+                        <td>{% if article.dateModif %}{{ article.dateModif|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <h3>Commentaires</h3>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Thèmes</h3>
+        </div>
 
-    <ul class="media-list">
+        <ul class="media-list">
 
-    </ul>
+        </ul>
 
-    <ul class="media-list">
-        {% for com in article.commentaires %}
-            <li class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object" src="{{ com.utilisateur.avatar }}" alt="avatar" style="width:64px; height:64px;">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">{{ com.utilisateur.prenom }} {{ com.utilisateur.nom }} <small>{{ com.date|date("d/m/Y H:i") }}</small></h4>
-                    {{ com.contenu }}
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+        <ul class="media-list">
+            {% for theme in article.themes %}
+                <li class="media">
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ theme.nom }} </h4>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Commentaires</h3>
+        </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('article_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('article_edit', { 'id': article.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        <ul class="media-list">
+
+        </ul>
+
+        <ul class="media-list">
+            {% for com in article.commentaires %}
+                <li class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="{{ com.utilisateur.avatar }}" alt="avatar" style="width:64px; height:64px;">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ com.utilisateur.prenom }} {{ com.utilisateur.nom }} <small>{{ com.date|date("d/m/Y H:i") }}</small></h4>
+                        {{ com.contenu }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{{ path('article_index') }}">Retourner à la liste</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ path('article_edit', { 'id': article.id }) }}">Éditer</a>
+                </li>
+                <li class="list-group-item text-right">
+                    {{ form_start(delete_form) }}
+                            <input class="btn btn-danger" type="submit" value="Delete">
+                    {{ form_end(delete_form) }}
+                </li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}

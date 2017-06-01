@@ -22,6 +22,6 @@ BlogBundle\Entity\Theme:
     manyToMany:
         article:
             targetEntity: Article
-            inversedBy: themes
+            mappedBy: themes
 
     lifecycleCallbacks: {  }

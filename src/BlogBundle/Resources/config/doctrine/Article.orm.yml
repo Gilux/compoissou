@@ -36,6 +36,6 @@ BlogBundle\Entity\Article:
     manyToMany:
         themes:
             targetEntity: Theme
-            mappedBy: article
+            inversedBy: article
 
     lifecycleCallbacks: {  }

@@ -1,7 +1,7 @@
-BlogBundle\Entity\Signalement_Article:
+BlogBundle\Entity\Signalementarticle:
     type: entity
     table: null
-    repositoryClass: BlogBundle\Repository\Signalement_ArticleRepository
+    repositoryClass: BlogBundle\Repository\SignalementarticleRepository
     id:
         id:
             type: integer

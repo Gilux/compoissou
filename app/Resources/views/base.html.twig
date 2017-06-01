@@ -51,6 +51,11 @@
                                             <i class="glyphicon glyphicon-th-list"></i>
                                             Mes thématiques </a>
                                     </li>
+                                    <li class="{% if app.request.attributes.get('_route') == 'article_index' %}active{% endif %}">
+                                        <a href="{{ path("article_index") }}">
+                                            <i class="glyphicon glyphicon-th-list"></i>
+                                            Afficher vos articles </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="{% if app.request.attributes.get('_route') == 'signalements_list' %}active{% endif %}">

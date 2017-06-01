@@ -27,29 +27,17 @@
                         <th>Date de modification</th>
                         <td>{% if article.dateModif %}{{ article.dateModif|date('Y-m-d H:i:s') }}{% endif %}</td>
                     </tr>
+                    <tr>
+                        <th>Thèmes</th>
+                        <td>
+                        {% for untheme in article.themes %}
+                            {{ untheme.nom }}
+                        {% endfor %}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <h3>Thèmes</h3>
-        </div>
-
-        <ul class="media-list">
-
-        </ul>
-
-        <ul class="media-list">
-            {% for theme in article.themes %}
-                <li class="media">
-                    <div class="media-body">
-                        <h4 class="media-heading">{{ theme.nom }} </h4>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
     </div>
 
     <div class="row">
@@ -79,20 +67,12 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-3">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a href="{{ path('article_index') }}">Retourner à la liste</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="{{ path('article_edit', { 'id': article.id }) }}">Éditer</a>
-                </li>
-                <li class="list-group-item text-right">
-                    {{ form_start(delete_form) }}
-                            <input class="btn btn-danger" type="submit" value="Delete">
-                    {{ form_end(delete_form) }}
-                </li>
-            </ul>
+        <div class="col-xs-12">
+            <a class="btn btn-warning" href="{{ path('article_index') }}">Retourner à la liste</a>
+            <a class="btn btn-info" href="{{ path('article_edit', { 'id': article.id }) }}">Éditer</a>
+            {{ form_start(delete_form) }}
+                    <input class="btn btn-danger" type="submit" value="Delete">
+            {{ form_end(delete_form) }}
         </div>
     </div>
 {% endblock %}

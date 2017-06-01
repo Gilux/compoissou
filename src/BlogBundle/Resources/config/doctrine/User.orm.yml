@@ -53,4 +53,8 @@ BlogBundle\Entity\User:
             targetEntity: Commentaire
             mappedBy: utilisateur
 
+        signalements_commentaire:
+            targetEntity: Signalement_Commentaire
+            mappedBy: utilisateur
+
     lifecycleCallbacks: {  }

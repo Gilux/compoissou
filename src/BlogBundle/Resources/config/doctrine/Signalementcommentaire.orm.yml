@@ -12,4 +12,12 @@ BlogBundle\Entity\Signalementcommentaire:
         contenu:
             type: text
             column: Contenu
-    lifecycleCallbacks: {  }
+
+    manyToOne:
+        commentaire:
+            targetEntity: Commentaire
+            inversedBy: signalements_commentaire
+
+        utilisateur:
+            targetEntity: User
+            inversedBy: signalements_commentaire

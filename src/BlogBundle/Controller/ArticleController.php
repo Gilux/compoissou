@@ -20,7 +20,8 @@ class ArticleController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $articles = $em->getRepository('BlogBundle:Article')->findAll();
+        //Articles de l'utilisateur
+        $articles = $em->getRepository('BlogBundle:Article')->findByUtilisateur($this->getUser());
 
         return $this->render('article/index.html.twig', array(
             'articles' => $articles,
@@ -38,8 +39,11 @@ class ArticleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $article->setDateCreation(new \DateTime());
             $article->setDateModif(new \DateTime());
+            $article->setUtilisateur($this->getUser());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
@@ -63,7 +67,7 @@ class ArticleController extends Controller
 
         return $this->render('BlogBundle:Article:show.html.twig', array(
             'article' => $article,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteForm->createView()
         ));
     }
 
@@ -78,6 +82,9 @@ class ArticleController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $article->setDateModif(new \DateTime());
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('article_edit', array('id' => $article->getId()));

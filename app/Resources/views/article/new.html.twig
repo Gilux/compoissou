@@ -1,16 +1,26 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block body %}
-    <h1>Création d'un article</h1>
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Création d'un article</h1>
+        </div>
+    </div>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input class="btn btn-info" type="submit" value="Créer" />
-    {{ form_end(form) }}
+    <div class="row">
+        <div class="col-xs-12">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input class="btn btn-info" type="submit" value="Créer" />
+            {{ form_end(form) }}
+        </div>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('article_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-warning" href="{{ path('article_index') }}">Retourner à la liste</a>
+        </div>
+    </div>
+
 {% endblock %}

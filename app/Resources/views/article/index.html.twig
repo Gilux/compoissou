@@ -3,6 +3,7 @@
 {% block body %}
     <h1>Liste des articles</h1>
 
+
     <table class="table">
         <thead>
             <tr>
@@ -29,9 +30,6 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('article_new') }}">Create a new article</a>
-        </li>
-    </ul>
+    <a class="btn btn-info" href="{{ path('article_new') }}">Créer un nouvel article</a>
+
 {% endblock %}

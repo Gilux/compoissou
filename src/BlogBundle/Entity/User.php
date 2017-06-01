@@ -44,8 +44,6 @@ class User implements UserInterface, \Serializable
 
     private $commentaires;
 
-    private $notes;
-
     private $avatar;
 
     /**
@@ -213,7 +211,6 @@ class User implements UserInterface, \Serializable
         $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -252,21 +249,6 @@ class User implements UserInterface, \Serializable
     public function getChoixthemes()
     {
         return $this->themeassociation->toArray();;
-    }
-
-    public function addNote(Note $note)
-    {
-        $this->notes[] = $note;
-    }
-
-    public function removeNote(Note $note)
-    {
-        $this->notes->removeElement($note);
-    }
-
-    public function getNotes()
-    {
-        return $this->notes->toArray();;
     }
 
     public function addArticle(\BlogBundle\Entity\Article $article)

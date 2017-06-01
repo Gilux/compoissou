@@ -24,4 +24,9 @@ BlogBundle\Entity\Commentaire:
         article:
             targetEntity: Article
             inversedBy: commentaires
+
+    oneToMany:
+        signalements_commentaire:
+            targetEntity: Signalement_Commentaire
+            mappedBy: commentaire
     lifecycleCallbacks: {  }

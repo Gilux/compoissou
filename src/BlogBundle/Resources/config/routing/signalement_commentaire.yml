@@ -1,0 +1,24 @@
+signalement_index:
+    path:     /
+    defaults: { _controller: "BlogBundle:Signalement_Commentaire:index" }
+    methods:  GET
+
+signalement_show:
+    path:     /{id}/show
+    defaults: { _controller: "BlogBundle:Signalement_Commentaire:show" }
+    methods:  GET
+
+signalement_new:
+    path:     /new/{idComm}
+    defaults: { _controller: "BlogBundle:Signalement_Commentaire:new" }
+    methods:  [GET, POST]
+
+signalement_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BlogBundle:Signalement_Commentaire:edit" }
+    methods:  [GET, POST]
+
+signalement_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BlogBundle:Signalement_Commentaire:delete" }
+    methods:  DELETE

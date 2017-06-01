@@ -23,7 +23,7 @@ class ArticleController extends Controller
         //Articles de l'utilisateur
         $articles = $em->getRepository('BlogBundle:Article')->findByUtilisateur($this->getUser());
 
-        return $this->render('article/index.html.twig', array(
+        return $this->render('BlogBundle:Article:index.html.twig', array(
             'articles' => $articles,
         ));
     }
@@ -51,7 +51,7 @@ class ArticleController extends Controller
             return $this->redirectToRoute('article_show', array('id' => $article->getId()));
         }
 
-        return $this->render('article/new.html.twig', array(
+        return $this->render('BlogBundle:Article:new.html.twig', array(
             'article' => $article,
             'form' => $form->createView(),
         ));
@@ -90,7 +90,7 @@ class ArticleController extends Controller
             return $this->redirectToRoute('article_edit', array('id' => $article->getId()));
         }
 
-        return $this->render('article/edit.html.twig', array(
+        return $this->render('BlogBundle:Article:edit.html.twig', array(
             'article' => $article,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

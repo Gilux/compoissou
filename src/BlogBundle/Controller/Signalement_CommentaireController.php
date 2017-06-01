@@ -22,7 +22,7 @@ class Signalement_CommentaireController extends Controller
 
         $signalement_Commentaires = $em->getRepository('BlogBundle:Signalement_Commentaire')->findByUtilisateur($this->getUser());
 
-        return $this->render('signalement_commentaire/index.html.twig', array(
+        return $this->render('BlogBundle:Signalement_Commentaire:index.html.twig', array(
             'signalement_Commentaires' => $signalement_Commentaires,
         ));
     }
@@ -31,7 +31,7 @@ class Signalement_CommentaireController extends Controller
      * Creates a new signalement_Commentaire entity.
      *
      */
-    public function newAction(Request $request, $idComm)
+    public function newAction(Request $request, $idComm = NULL)
     {
         $signalement_Commentaire = new Signalement_commentaire();
         $form = $this->createForm('BlogBundle\Form\Signalement_CommentaireType', $signalement_Commentaire);
@@ -47,26 +47,12 @@ class Signalement_CommentaireController extends Controller
             $em->persist($signalement_Commentaire);
             $em->flush();
 
-            return $this->redirectToRoute('signalement_show', array('id' => $signalement_Commentaire->getId()));
+            return $this->redirectToRoute('signalement_index');
         }
 
-        return $this->render('signalement_commentaire/new.html.twig', array(
+        return $this->render('BlogBundle:Signalement_Commentaire:new.html.twig', array(
             'signalement_Commentaire' => $signalement_Commentaire,
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a signalement_Commentaire entity.
-     *
-     */
-    public function showAction(Signalement_Commentaire $signalement_Commentaire)
-    {
-        $deleteForm = $this->createDeleteForm($signalement_Commentaire);
-
-        return $this->render('signalement_commentaire/show.html.twig', array(
-            'signalement_Commentaire' => $signalement_Commentaire,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -86,7 +72,7 @@ class Signalement_CommentaireController extends Controller
             return $this->redirectToRoute('signalement_edit', array('id' => $signalement_Commentaire->getId()));
         }
 
-        return $this->render('signalement_commentaire/edit.html.twig', array(
+        return $this->render('BlogBundle:Signalement_Commentaire:edit.html.twig', array(
             'signalement_Commentaire' => $signalement_Commentaire,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -125,16 +111,5 @@ class Signalement_CommentaireController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
-    }
-
-    public function messignalementsAction(){
-
-        $em = $this->getDoctrine()->getManager();
-
-        $signalement_Commentaires = $em->getRepository('BlogBundle:Signalement_Commentaire')->findByUtilisateur($this->getUser());
-
-        return $this->render('BlogBundle:Signalement:list.html.twig', array(
-            'signalements_Commentaires' => $signalement_Commentaires,
-        ));
     }
 }

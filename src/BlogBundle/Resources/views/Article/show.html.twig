@@ -52,13 +52,19 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">{{ com.utilisateur.prenom }} {{ com.utilisateur.nom }} <small>{{ com.date|date("d/m/Y H:i") }}</small></h4>
+                    <h4 class="media-heading">
+                        {{ com.utilisateur.prenom }} {{ com.utilisateur.nom }}
+                        <small>
+                            {{ com.date|date("d/m/Y H:i") }}
+                        </small>
+                        <a href="{{ path('signalement_new', { 'idComm': com.id }) }}" >
+                            <i class="glyphicon glyphicon-flash"></i>
+                        </a>
+                    </h4>
                     {{ com.contenu }}
                 </div>
                 <div class="media-right media-middle">
-                    <a href="{{ path('signalement_new', { 'idComm': com.id }) }}" >
-                        <i class="glyphicon glyphicon-flash"></i>
-                    </a>
+
                 </div>
             </div>
         {% endfor %}

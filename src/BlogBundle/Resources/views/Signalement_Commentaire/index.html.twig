@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Signalement de commentaire</h1>
+
+    {% if signalement_Commentaires %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Contenu</th>
+                    <th>Commentaire de</th>
+                    <th>Sur l'article</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for signalement_Commentaire in signalement_Commentaires %}
+                <tr>
+                    <td>{{ signalement_Commentaire.contenu }}</td>
+                    <td>{{ signalement_Commentaire.commentaire.utilisateur.nom }} {{ signalement_Commentaire.commentaire.utilisateur.prenom }}</td>
+                    <td>
+                        <a href="{{ path('article_show', { 'id': signalement_Commentaire.commentaire.article.id }) }}">
+                            {{ signalement_Commentaire.commentaire.article.titre }}
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('signalement_edit', { 'id': signalement_Commentaire.id }) }}">Éditer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">Vous n'avez fait aucun signalement</p>
+    {% endif %}
+
+{% endblock %}

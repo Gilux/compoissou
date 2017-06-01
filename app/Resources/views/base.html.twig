@@ -58,11 +58,21 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="{% if app.request.attributes.get('_route') == 'signalements_list' %}active{% endif %}">
-                                <a href="{{ path("signalements_list") }}">
+                            <li class="dropdown {% if app.request.attributes.get('_route') == 'utilisateur_profil' or app.request.attributes.get('_route') == "thematiques_list" %}active{% endif %}">
+                                <a href="#">
                                     <i class="glyphicon glyphicon-flash"></i>
                                     Signalements
                                 </a>
+                                <ul>
+                                    <li class="{% if app.request.attributes.get('_route') == 'signalement_index' %}active{% endif %}">
+                                        <a href="{{ path("signalement_index") }}">
+                                            Signalements Commentaires </a>
+                                    </li>
+                                    <li class="{% if app.request.attributes.get('_route') == 'signalement_index' %}active{% endif %}">
+                                        <a href="{{ path("signalement_index") }}">
+                                            Signalements Articles </a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li>

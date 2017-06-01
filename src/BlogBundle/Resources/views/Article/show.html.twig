@@ -39,31 +39,30 @@
             </table>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12">
             <h3>Commentaires</h3>
         </div>
-
-        <ul class="media-list">
-
-        </ul>
-
-        <ul class="media-list">
-            {% for com in article.commentaires %}
-                <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" src="{{ com.utilisateur.avatar }}" alt="avatar" style="width:64px; height:64px;">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">{{ com.utilisateur.prenom }} {{ com.utilisateur.nom }} <small>{{ com.date|date("d/m/Y H:i") }}</small></h4>
-                        {{ com.contenu }}
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="col-xs-12">
+        {% for com in article.commentaires %}
+            <div class="media">
+                <div class="media-left media-middle">
+                    <a href="#">
+                        <img class="media-object" src="{{ com.utilisateur.avatar }}" alt="avatar" style="width:64px; height:64px;">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ com.utilisateur.prenom }} {{ com.utilisateur.nom }} <small>{{ com.date|date("d/m/Y H:i") }}</small></h4>
+                    {{ com.contenu }}
+                </div>
+                <div class="media-right media-middle">
+                    <a href="{{ path('signalement_new', { 'idComm': com.id }) }}" >
+                        <i class="glyphicon glyphicon-flash"></i>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
     </div>
 
     <div class="row">

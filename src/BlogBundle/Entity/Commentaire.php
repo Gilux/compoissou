@@ -27,6 +27,16 @@ class Commentaire
      */
     private $utilisateur;
 
+    private $signalements_commentaire;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->signalements_commentaire = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * @return User
      */
@@ -122,5 +132,22 @@ class Commentaire
     public function getDate()
     {
         return $this->date;
+    }
+
+    public function addSignalementCommentaire(\BlogBundle\Entity\Signalement_Commentaire $signalements_commentaire)
+    {
+        $this->signalements_commentaire[] = $signalements_commentaire;
+
+        return $this;
+    }
+
+    public function removeSignalementCommentaire(\BlogBundle\Entity\Signalement_Commentaire $signalements_commentaire)
+    {
+        $this->signalements_commentaire->removeElement($signalements_commentaire);
+    }
+
+    public function getSignalementCommentaire()
+    {
+        return $this->signalements_commentaire;
     }
 }

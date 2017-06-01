@@ -201,6 +201,8 @@ class User implements UserInterface, \Serializable
      */
     protected $themeassociation;
 
+    private $signalements_commentaire;
+
 
     /**
      * Constructor
@@ -211,6 +213,7 @@ class User implements UserInterface, \Serializable
         $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->signalements_commentaire = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -266,6 +269,23 @@ class User implements UserInterface, \Serializable
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    public function addSignalementCommentaire(\BlogBundle\Entity\Signalement_Commentaire $signalements_commentaire)
+    {
+        $this->signalements_commentaire[] = $signalements_commentaire;
+
+        return $this;
+    }
+
+    public function removeSignalementCommentaire(\BlogBundle\Entity\Signalement_Commentaire $signalements_commentaire)
+    {
+        $this->signalements_commentaire->removeElement($signalements_commentaire);
+    }
+
+    public function getSignalementCommentaire()
+    {
+        return $this->signalements_commentaire;
     }
 
     public function __toString()

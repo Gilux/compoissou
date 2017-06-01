@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Signalement_commentaires list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Contenu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for signalement_Commentaire in signalement_Commentaires %}
+            <tr>
+                <td><a href="{{ path('signalement_show', { 'id': signalement_Commentaire.id }) }}">{{ signalement_Commentaire.id }}</a></td>
+                <td>{{ signalement_Commentaire.contenu }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('signalement_show', { 'id': signalement_Commentaire.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('signalement_edit', { 'id': signalement_Commentaire.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('signalement_new') }}">Create a new signalement_Commentaire</a>
+        </li>
+    </ul>
+{% endblock %}

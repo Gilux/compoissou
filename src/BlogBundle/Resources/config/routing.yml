@@ -6,17 +6,13 @@ blog_user:
     resource: "@BlogBundle/Resources/config/routing/user.yml"
     prefix:   /user
 
+blog_signalement_commentaire:
+    resource: "@BlogBundle/Resources/config/routing/signalement_commentaire.yml"
+    prefix: /signalement
+
 blog_homepage:
     path:     /index
     defaults: { _controller: BlogBundle:Default:index }
-
-signalements_list:
-    path:     /signalements/list
-    defaults: { _controller: BlogBundle:Signalement:list }
-
-signalements_add:
-    path:     /signalements/add
-    defaults: { _controller: BlogBundle:Signalement:add }
 
 utilisateur_profil:
     path:     /utilisateurs/profil/{id}

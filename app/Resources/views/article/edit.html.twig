@@ -1,21 +1,26 @@
 {% extends 'base.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
 
 {% block body %}
-    <h1>Article edit</h1>
+    <h1>Édition d'un article</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <input class="btn btn-info" type="submit" value="Éditer" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('article_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col-xs-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="{{ path('article_index') }}">Retourner à la liste</a>
+                </li>
+                <li class="list-group-item text-right">
+                    {{ form_start(delete_form) }}
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                    {{ form_end(delete_form) }}
+                </li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}

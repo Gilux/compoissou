@@ -33,6 +33,10 @@ BlogBundle\Entity\Article:
             targetEntity: Commentaire
             mappedBy: article
 
+        notes:
+            targetEntity: Note
+            mappedBy: article
+
     manyToMany:
         themes:
             targetEntity: Theme

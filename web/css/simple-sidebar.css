@@ -160,3 +160,6 @@ li.dropdown li.active {
 
 .btn-default.btn-on.active{background-color: #5BB75B;color: white;}
 .btn-default.btn-off.active{background-color: #DA4F49;color: white;}
+
+#hearts { color: #ee8b2d; font-size:2rem;}
+#hearts-existing { color: #ee8b2d; font-size:2rem;}

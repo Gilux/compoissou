@@ -45,6 +45,10 @@ BlogBundle\Entity\User:
             targetEntity: Article
             mappedBy: utilisateur
 
+        notes:
+            targetEntity: Note
+            mappedBy: utilisateur
+
         commentaires:
             targetEntity: Commentaire
             mappedBy: utilisateur

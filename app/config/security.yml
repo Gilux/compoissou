@@ -1,7 +1,8 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
-
+    acl:
+        connection: default
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         utilisateurs:
@@ -24,7 +25,7 @@ security:
             security: false
 
         blog:
-            pattern: ^/(index|utilisateur|login_check|logout|signalement|thematiques|article|commentaires|user)
+            pattern: ^/(index|utilisateur|login_check|logout|signalement|thematiques|article|commentaires|user|notes)
             form_login:
                 login_path: /
                 check_path: /login_check

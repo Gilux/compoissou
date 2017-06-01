@@ -36,6 +36,8 @@ class Article
 
     private $commentaires;
 
+    private $notes;
+
     private $utilisateur;
 
 
@@ -46,6 +48,7 @@ class Article
     {
         $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -196,5 +199,22 @@ class Article
     public function getCommentaires()
     {
         return $this->commentaires;
+    }
+
+    public function addNote(\BlogBundle\Entity\Note $note)
+    {
+        $this->notes[] = $note;
+
+        return $this;
+    }
+
+    public function removeNote(\BlogBundle\Entity\Note $note)
+    {
+        $this->notes->removeElement($note);
+    }
+
+    public function getNotes()
+    {
+        return $this->notes;
     }
 }

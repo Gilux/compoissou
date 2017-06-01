@@ -3,9 +3,9 @@
 namespace BlogBundle\Entity;
 
 /**
- * Signalement_Commentaire
+ * Signalementcommentaire
  */
-class Signalement_Commentaire
+class Signalementcommentaire
 {
     /**
      * @var int
@@ -33,7 +33,7 @@ class Signalement_Commentaire
      *
      * @param string $contenu
      *
-     * @return Signalement_Commentaire
+     * @return Signalementcommentaire
      */
     public function setContenu($contenu)
     {

@@ -1,0 +1,25 @@
+BlogBundle\Entity\Note:
+    type: entity
+    table: null
+    repositoryClass: BlogBundle\Repository\NoteRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        note:
+            type: integer
+            column: Note
+
+    manyToOne:
+        utilisateur:
+            targetEntity: User
+            inversedBy: notes
+
+        article:
+            targetEntity: Article
+            inversedBy: notes
+
+    lifecycleCallbacks: {  }

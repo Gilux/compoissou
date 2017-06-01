@@ -1,7 +1,7 @@
-BlogBundle\Entity\Signalement_Commentaire:
+BlogBundle\Entity\Signalementcommentaire:
     type: entity
     table: null
-    repositoryClass: BlogBundle\Repository\Signalement_CommentaireRepository
+    repositoryClass: BlogBundle\Repository\SignalementcommentaireRepository
     id:
         id:
             type: integer

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+    <h1>Signalement_commentaire edit</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input class="btn btn-info" type="submit" value="Éditer" />
+    {{ form_end(edit_form) }}
+
+    <a class="btn btn-warning" href="{{ path('signalement_index') }}">Retourner à la liste</a>
+
+    {{ form_start(delete_form) }}
+        <input class="btn btn-danger" type="submit" value="Supprimer">
+    {{ form_end(delete_form) }}
+{% endblock %}

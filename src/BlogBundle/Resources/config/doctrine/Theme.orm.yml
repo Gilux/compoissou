@@ -14,13 +14,17 @@ BlogBundle\Entity\Theme:
             length: 255
             column: Nom
 
+        description:
+            type: text
+            column: Description
+
     oneToMany:
         themeassociation:
             targetEntity: Choixtheme
             mappedBy: theme
 
     manyToMany:
-        article:
+        articles:
             targetEntity: Article
             mappedBy: themes
 

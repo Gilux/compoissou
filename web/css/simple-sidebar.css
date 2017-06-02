@@ -163,3 +163,6 @@ li.dropdown li.active {
 
 #hearts { color: #ee8b2d; font-size:2rem;}
 #hearts-existing { color: #ee8b2d; font-size:2rem;}
+
+.thumbnail { position: relative; }
+.thumbnail > button.btn { display:inline-block; position: absolute; top:5px; right:5px;}

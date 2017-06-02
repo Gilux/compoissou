@@ -14,10 +14,20 @@ class DefaultController extends Controller
         /**
          * Si l'utilisateur à le ROLE_AUTEUR
          */
-        $repositoryArticle = $em->getRepository("BlogBundle:Article");
-        $articlesAuteur = $repositoryArticle->findByUtilisateur($this->getUser()->getId());
-        if(count($articlesAuteur) != 0)
+        if($this->isGranted("ROLE_AUTEUR"))
+        {
+            $repositoryArticle = $em->getRepository("BlogBundle:Article");
+            $articlesAuteur = $repositoryArticle->findByUtilisateur($this->getUser());
+            if(count($articlesAuteur) != 0)
+                $retour = array("articlesAuteur" => $articlesAuteur);
+        }
+        else
+        {
+            $repositoryArticle = $em->getRepository("BlogBundle:Article");
+            $articlesAuteur = $repositoryArticle->findAll();
             $retour = array("articlesAuteur" => $articlesAuteur);
+        }
+
 
         return $this->render('BlogBundle:Default:index.html.twig', $retour);
     }

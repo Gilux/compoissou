@@ -24,6 +24,10 @@ thematiques_list:
     path:     /thematiques/list
     defaults: { _controller: BlogBundle:Thematique:list }
 
+thematiques_user_change:
+    path:     /thematiques/user/change
+    defaults: { _controller: BlogBundle:Thematique:changestatut}
+
 thematiques_search:
     path:     /thematiques/search/{str}
     defaults:

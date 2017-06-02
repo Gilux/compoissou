@@ -10,4 +10,19 @@ namespace BlogBundle\Repository;
  */
 class ChoixthemeRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByUserAndTheme($user,$theme)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('a.theme = :theme')
+            ->setParameter('theme', $theme)
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }

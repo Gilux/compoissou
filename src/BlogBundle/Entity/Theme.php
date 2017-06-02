@@ -2,6 +2,8 @@
 
 namespace BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Theme
  */
@@ -17,14 +19,16 @@ class Theme
      */
     private $nom;
 
+    private $description;
 
     private $themeassociation;
 
-    private $article;
+    private $articles;
 
     public function __construct()
     {
-        $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->themeassociation = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     /**
@@ -61,15 +65,31 @@ class Theme
         return $this->nom;
     }
 
-    public function getArticle(){
-        return $this->article;
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
-    public function setArticle($article)
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
     {
-        $this->article = $article;
+        $this->description = $description;
+    }
 
-        return $this;
+
+
+    public function getArticles(){
+        return $this->articles;
+    }
+
+    public function addArticle($article)
+    {
+        $this->articles[] = $article;
     }
 
     public function __toString()

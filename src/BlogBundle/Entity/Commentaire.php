@@ -27,14 +27,14 @@ class Commentaire
      */
     private $utilisateur;
 
-    private $signalements_commentaire;
+    private $signalementscommentaire;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->signalements_commentaire = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->signalementscommentaire = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -134,20 +134,20 @@ class Commentaire
         return $this->date;
     }
 
-    public function addSignalementCommentaire(\BlogBundle\Entity\Signalement_Commentaire $signalements_commentaire)
+    public function addSignalementcommentaire(\BlogBundle\Entity\Signalementcommentaire $signalementscommentaire)
     {
-        $this->signalements_commentaire[] = $signalements_commentaire;
+        $this->signalementscommentaire[] = $signalementscommentaire;
 
         return $this;
     }
 
-    public function removeSignalementCommentaire(\BlogBundle\Entity\Signalement_Commentaire $signalements_commentaire)
+    public function removeSignalementcommentaire(\BlogBundle\Entity\Signalementcommentaire $signalementscommentaire)
     {
-        $this->signalements_commentaire->removeElement($signalements_commentaire);
+        $this->signalementscommentaire->removeElement($signalementscommentaire);
     }
 
-    public function getSignalementCommentaire()
+    public function getSignalementcommentaires()
     {
-        return $this->signalements_commentaire;
+        return $this->signalementscommentaire;
     }
 }

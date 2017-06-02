@@ -16,8 +16,8 @@ BlogBundle\Entity\Signalementcommentaire:
     manyToOne:
         commentaire:
             targetEntity: Commentaire
-            inversedBy: signalements_commentaire
+            inversedBy: signalementscommentaire
 
         utilisateur:
             targetEntity: User
-            inversedBy: signalements_commentaire
+            inversedBy: signalementscommentaire

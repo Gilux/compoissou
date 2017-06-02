@@ -65,8 +65,29 @@ class ArticleController extends Controller
     {
         $deleteForm = $this->createDeleteForm($article);
 
+        $notes = $article->getNotes();
+
+        $total = 0;
+
+        foreach($notes as $note)
+        {
+            $total += $note->getNote();
+        }
+
+        if(count($notes) != 0)
+        {
+            $moyenne = $total/count($notes);
+        }
+        else
+        {
+            $moyenne = null;
+        }
+
+
+
         return $this->render('BlogBundle:Article:show.html.twig', array(
             'article' => $article,
+            'moyenne' => round($moyenne,2),
             'delete_form' => $deleteForm->createView()
         ));
     }

@@ -26,7 +26,7 @@ BlogBundle\Entity\Commentaire:
             inversedBy: commentaires
 
     oneToMany:
-        signalements_commentaire:
-            targetEntity: Signalement_Commentaire
+        signalementscommentaire:
+            targetEntity: Signalementcommentaire
             mappedBy: commentaire
     lifecycleCallbacks: {  }

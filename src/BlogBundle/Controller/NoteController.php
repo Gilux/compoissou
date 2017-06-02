@@ -8,22 +8,62 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NoteController extends Controller
 {
-    public function addAction()
+    public function addAction($id)
     {
-        $reponse = array("success" => true);
-
         $note = $_POST["note"];
 
         // TODO : check sécurité (un user ne peut noter qu'un article s'il en a les droits)
 
-        $newNote = new Note();
-        $newNote->setNote($note);
-        $newNote->setUtilisateur($this->getUser());
+        $manager = $this->getDoctrine()->getManager();
+
+        $articleRepository = $manager->getRepository('BlogBundle:Article');
+        $noteRepository = $manager->getRepository('BlogBundle:Note');
+
+        $article = $articleRepository->findOneById($id);
+
+        $noteObj = $noteRepository->findByUserAndArticle($this->getUser(),$article);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($newNote);
-        $em->flush();
 
+        $reponse["status"] = null;
+
+
+        // Si l'utilisateur n'a pas déjà noté cet article
+        if(is_null($noteObj))
+        {
+            $newNote = new Note();
+            $newNote->setNote($note);
+            $newNote->setUtilisateur($this->getUser());
+            $newNote->setArticle($article);
+            $em->persist($newNote);
+            $em->flush();
+            $reponse["status"] = "create";
+        }
+        else // Sinon il s'agit d'une modification, on met la note à jour
+        {
+            $noteObj->setNote($note);
+            $em->persist($noteObj);
+            $em->flush();
+            $reponse["status"] = "update";
+        }
+
+
+        $notes = $article->getNotes();
+        $total = 0;
+        foreach($notes as $note)
+        {
+            $total += $note->getNote();
+        }
+        if(count($notes) != 0)
+        {
+            $moyenne = round($total/count($notes),2);
+        }
+        else
+        {
+            $moyenne = null;
+        }
+
+        $reponse["moyenne"] = $moyenne;
 
         return new JsonResponse(
             $reponse,

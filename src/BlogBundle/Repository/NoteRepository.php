@@ -10,4 +10,19 @@ namespace BlogBundle\Repository;
  */
 class NoteRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByUserAndArticle($user,$article)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.utilisateur = :user')
+            ->setParameter('user', $user)
+            ->andWhere('a.article = :article')
+            ->setParameter('article', $article)
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }

@@ -20,7 +20,7 @@ class Signalement_CommentaireController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $signalement_Commentaires = $em->getRepository('BlogBundle:Signalement_Commentaire')->findByUtilisateur($this->getUser());
+        $signalement_Commentaires = $em->getRepository('BlogBundle:Signalementcommentaire')->findByUtilisateur($this->getUser());
 
         return $this->render('signalement_commentaire/index.html.twig', array(
             'signalement_Commentaires' => $signalement_Commentaires,
@@ -33,8 +33,8 @@ class Signalement_CommentaireController extends Controller
      */
     public function newAction(Request $request, $idComm)
     {
-        $signalement_Commentaire = new Signalement_commentaire();
-        $form = $this->createForm('BlogBundle\Form\Signalement_CommentaireType', $signalement_Commentaire);
+        $signalement_Commentaire = new Signalementcommentaire();
+        $form = $this->createForm('BlogBundle\Form\SignalementcommentaireType', $signalement_Commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,7 +77,7 @@ class Signalement_CommentaireController extends Controller
     public function editAction(Request $request, Signalement_Commentaire $signalement_Commentaire)
     {
         $deleteForm = $this->createDeleteForm($signalement_Commentaire);
-        $editForm = $this->createForm('BlogBundle\Form\Signalement_CommentaireType', $signalement_Commentaire);
+        $editForm = $this->createForm('BlogBundle\Form\SignalementcommentaireType', $signalement_Commentaire);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

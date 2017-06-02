@@ -44,6 +44,10 @@ class User implements UserInterface, \Serializable
 
     private $commentaires;
 
+    private $notes;
+
+    private $signalementscommentaire;
+
     private $avatar;
 
     /**
@@ -211,6 +215,7 @@ class User implements UserInterface, \Serializable
         $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -252,11 +257,11 @@ class User implements UserInterface, \Serializable
     }
 
     public function addArticle(\BlogBundle\Entity\Article $article)
-    {
-        $this->articles[] = $article;
+{
+    $this->articles[] = $article;
 
-        return $this;
-    }
+    return $this;
+}
 
     public function removeArticle(\BlogBundle\Entity\Article $article)
     {
@@ -266,6 +271,21 @@ class User implements UserInterface, \Serializable
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    public function addNote(\BlogBundle\Entity\Note $note)
+    {
+        $this->notes[] = $note;
+    }
+
+    public function removeNote(\BlogBundle\Entity\Note $note)
+    {
+        $this->notes->removeElement($note);
+    }
+
+    public function getNotes()
+    {
+        return $this->notes;
     }
 
     public function __toString()

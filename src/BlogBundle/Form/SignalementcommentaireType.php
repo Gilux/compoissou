@@ -22,7 +22,7 @@ class SignalementcommentaireType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BlogBundle\Entity\Signalement_Commentaire'
+            'data_class' => 'BlogBundle\Entity\Signalementcommentaire'
         ));
     }
 
@@ -31,7 +31,7 @@ class SignalementcommentaireType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'blogbundle_signalement_commentaire';
+        return 'blogbundle_signalementcommentaire';
     }
 
 

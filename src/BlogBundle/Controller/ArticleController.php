@@ -22,9 +22,25 @@ class ArticleController extends Controller
 
         //Articles de l'utilisateur
         $articles = $em->getRepository('BlogBundle:Article')->findByUtilisateur($this->getUser());
+        //notes moyennes de tous les articles de l'auteur
+        $total = 0;
+        $count = 0;
+        foreach ($articles as $article)
+        {
+            $notes = $article->getNotes();
+
+            $count += count($notes);
+            foreach($notes as $note)
+            {
+                $total += $note->getNote();
+            }
+        }
+
+        $moyenne = $total/$count;
 
         return $this->render('article/index.html.twig', array(
             'articles' => $articles,
+            'moyenne' => $moyenne
         ));
     }
 

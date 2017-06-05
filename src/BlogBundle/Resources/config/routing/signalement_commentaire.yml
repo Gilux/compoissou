@@ -10,7 +10,7 @@ signalement_show:
 
 signalement_new:
     path:     /new/{idComm}
-    defaults: { _controller: "BlogBundle:Signalement_Commentaire:new" }
+    defaults: { _controller: "BlogBundle:Signalement_Commentaire:new", idComm: null }
     methods:  [GET, POST]
 
 signalement_edit:

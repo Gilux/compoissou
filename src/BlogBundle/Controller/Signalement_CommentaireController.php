@@ -2,7 +2,7 @@
 
 namespace BlogBundle\Controller;
 
-use BlogBundle\Entity\Signalement_Commentaire;
+use BlogBundle\Entity\Signalementcommentaire;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,7 +22,7 @@ class Signalement_CommentaireController extends Controller
 
         $signalement_Commentaires = $em->getRepository('BlogBundle:Signalementcommentaire')->findByUtilisateur($this->getUser());
 
-        return $this->render('signalement_commentaire/index.html.twig', array(
+        return $this->render('BlogBundle:Signalement_Commentaire:index.html.twig', array(
             'signalement_Commentaires' => $signalement_Commentaires,
         ));
     }
@@ -47,26 +47,12 @@ class Signalement_CommentaireController extends Controller
             $em->persist($signalement_Commentaire);
             $em->flush();
 
-            return $this->redirectToRoute('signalement_show', array('id' => $signalement_Commentaire->getId()));
+            return $this->redirectToRoute('signalement_index');
         }
 
-        return $this->render('signalement_commentaire/new.html.twig', array(
+        return $this->render('BlogBundle:Signalement_Commentaire:new.html.twig', array(
             'signalement_Commentaire' => $signalement_Commentaire,
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a signalement_Commentaire entity.
-     *
-     */
-    public function showAction(Signalement_Commentaire $signalement_Commentaire)
-    {
-        $deleteForm = $this->createDeleteForm($signalement_Commentaire);
-
-        return $this->render('signalement_commentaire/show.html.twig', array(
-            'signalement_Commentaire' => $signalement_Commentaire,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -74,7 +60,7 @@ class Signalement_CommentaireController extends Controller
      * Displays a form to edit an existing signalement_Commentaire entity.
      *
      */
-    public function editAction(Request $request, Signalement_Commentaire $signalement_Commentaire)
+    public function editAction(Request $request, Signalementcommentaire $signalement_Commentaire)
     {
         $deleteForm = $this->createDeleteForm($signalement_Commentaire);
         $editForm = $this->createForm('BlogBundle\Form\SignalementcommentaireType', $signalement_Commentaire);
@@ -86,7 +72,7 @@ class Signalement_CommentaireController extends Controller
             return $this->redirectToRoute('signalement_edit', array('id' => $signalement_Commentaire->getId()));
         }
 
-        return $this->render('signalement_commentaire/edit.html.twig', array(
+        return $this->render('BlogBundle:Signalement_Commentaire:edit.html.twig', array(
             'signalement_Commentaire' => $signalement_Commentaire,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -97,7 +83,7 @@ class Signalement_CommentaireController extends Controller
      * Deletes a signalement_Commentaire entity.
      *
      */
-    public function deleteAction(Request $request, Signalement_Commentaire $signalement_Commentaire)
+    public function deleteAction(Request $request, Signalementcommentaire $signalement_Commentaire)
     {
         $form = $this->createDeleteForm($signalement_Commentaire);
         $form->handleRequest($request);
@@ -118,7 +104,7 @@ class Signalement_CommentaireController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Signalement_Commentaire $signalement_Commentaire)
+    private function createDeleteForm(Signalementcommentaire $signalement_Commentaire)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('signalement_delete', array('id' => $signalement_Commentaire->getId())))

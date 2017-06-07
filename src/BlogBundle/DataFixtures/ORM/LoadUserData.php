@@ -22,6 +22,7 @@ class LoadUserData implements FixtureInterface
         $userAdmin->setNom('Admin');
         $userAdmin->setPrenom('Admin');
         $userAdmin->setPassword('test');
+        $userAdmin->setAvatar("https://cdn3.iconfinder.com/data/icons/internet-and-web-4/78/internt_web_technology-13-512.png");
         $userAdmin->addRole($userRole);
         $manager->persist($userAdmin);
         $manager->flush();
@@ -64,7 +65,7 @@ class LoadUserData implements FixtureInterface
         $thematique->setNom("Mathématiques");
         $manager->persist($thematique);
 
-
+        $manager->flush();
 
         /*$userAdmin = new User();
         $userAdmin->setLogin('lecteur@blog.fr');

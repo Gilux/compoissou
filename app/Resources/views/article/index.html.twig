@@ -3,17 +3,17 @@
 {% block body %}
     <h1>Liste des articles</h1>
 
-    <h3 class="lead">Moyenne de vos articles : {{ moyenne }}/5</h3>
+    <h3 class="lead">Moyenne de vos articles : {{ moyenne|number_format(1, '.', ',') }}/5</h3>
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Contenu</th>
-                <th>Date de création</th>
-                <th>Date de modification</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Titre</th>
+            <th>Contenu</th>
+            <th>Date de création</th>
+            <th>Date de modification</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for article in articles %}

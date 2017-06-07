@@ -48,6 +48,8 @@ class User implements UserInterface, \Serializable
 
     private $signalementscommentaire;
 
+    private $signalementsarticle;
+
     private $avatar;
 
     /**
@@ -257,11 +259,11 @@ class User implements UserInterface, \Serializable
     }
 
     public function addArticle(\BlogBundle\Entity\Article $article)
-{
-    $this->articles[] = $article;
+    {
+        $this->articles[] = $article;
 
-    return $this;
-}
+        return $this;
+    }
 
     public function removeArticle(\BlogBundle\Entity\Article $article)
     {

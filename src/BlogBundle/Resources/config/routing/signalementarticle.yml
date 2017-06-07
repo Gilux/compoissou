@@ -1,0 +1,19 @@
+signalementarticle_index:
+    path:     /
+    defaults: { _controller: "BlogBundle:Signalementarticle:index" }
+    methods:  GET
+
+signalementarticle_new:
+    path:     /new/{idArticle}
+    defaults: { _controller: "BlogBundle:Signalementarticle:new", idArticle: null }
+    methods:  [GET, POST]
+
+signalementarticle_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BlogBundle:Signalementarticle:edit" }
+    methods:  [GET, POST]
+
+signalementarticle_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BlogBundle:Signalementarticle:delete" }
+    methods:  DELETE

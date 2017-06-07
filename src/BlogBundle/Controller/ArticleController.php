@@ -25,18 +25,23 @@ class ArticleController extends Controller
         //notes moyennes de tous les articles de l'auteur
         $total = 0;
         $count = 0;
-        foreach ($articles as $article)
+        $moyenne = 0;
+        if(count($articles) != 0)
         {
-            $notes = $article->getNotes();
-
-            $count += count($notes);
-            foreach($notes as $note)
+            foreach ($articles as $article)
             {
-                $total += $note->getNote();
-            }
-        }
+                $notes = $article->getNotes();
 
-        $moyenne = $total/$count;
+                $count += count($notes);
+                foreach($notes as $note)
+                {
+                    $total += $note->getNote();
+                }
+            }
+
+            if($count != 0)
+                $moyenne = $total/$count;
+        }
 
         return $this->render('article/index.html.twig', array(
             'articles' => $articles,
@@ -64,6 +69,14 @@ class ArticleController extends Controller
             $em->persist($article);
             $em->flush();
 
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = \Symfony\Component\Security\Acl\Domain\ObjectIdentity::fromDomainObject($article);
+            $acl = $aclProvider->createAcl($objectIdentity);
+            $user = $this->getUser();
+            $securityIdentity = \Symfony\Component\Security\Acl\Domain\UserSecurityIdentity::fromAccount($user);
+            $acl->insertObjectAce($securityIdentity, \Symfony\Component\Security\Acl\Permission\MaskBuilder::MASK_OWNER);
+            $aclProvider->updateAcl($acl);
+
             return $this->redirectToRoute('article_show', array('id' => $article->getId()));
         }
 
@@ -79,6 +92,14 @@ class ArticleController extends Controller
      */
     public function showAction(Article $article)
     {
+        /* Afficher l'article si :
+         *  - l'utilisateur à le droit de vision (ACE)
+         *  - l'utilisateur à le rôle ROLE_LECTEUR
+         * (Grâce à la hiérarchie les Critiques et les Admin peuvent le voir aussi)
+         */
+        if(!$this->isGranted('VIEW', $article) && !$this->isGranted('ROLE_LECTEUR'))
+            throw $this->createAccessDeniedException('Impossible de visionner cette page.');
+
         $deleteForm = $this->createDeleteForm($article);
 
         $notes = $article->getNotes();
@@ -114,6 +135,8 @@ class ArticleController extends Controller
      */
     public function editAction(Request $request, Article $article)
     {
+        $this->denyAccessUnlessGranted('EDIT', $article, 'Vous ne pouvez pas éditer cet article !');
+
         $deleteForm = $this->createDeleteForm($article);
         $editForm = $this->createForm('BlogBundle\Form\ArticleType', $article);
         $editForm->handleRequest($request);
@@ -140,11 +163,14 @@ class ArticleController extends Controller
      */
     public function deleteAction(Request $request, Article $article)
     {
+        $this->denyAccessUnlessGranted('DELETE', $article, 'Vous ne pouvez pas supprimer cet article !');
+
         $form = $this->createDeleteForm($article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
             $em->remove($article);
             $em->flush();
         }
@@ -165,6 +191,6 @@ class ArticleController extends Controller
             ->setAction($this->generateUrl('article_delete', array('id' => $article->getId())))
             ->setMethod('DELETE')
             ->getForm()
-        ;
+            ;
     }
 }

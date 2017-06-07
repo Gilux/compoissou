@@ -10,6 +10,10 @@ blog_signalement_commentaire:
     resource: "@BlogBundle/Resources/config/routing/signalement_commentaire.yml"
     prefix: /signalement
 
+blog_signalementarticle:
+    resource: "@BlogBundle/Resources/config/routing/signalementarticle.yml"
+    prefix: /signalementarticle
+
 blog_homepage:
     path:     /index
     defaults: { _controller: BlogBundle:Default:index }

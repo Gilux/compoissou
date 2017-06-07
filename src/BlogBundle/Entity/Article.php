@@ -40,6 +40,8 @@ class Article
 
     private $utilisateur;
 
+    private $signalementsarticle;
+
 
     /**
      * Constructor
@@ -49,6 +51,7 @@ class Article
         $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
         $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->signalementsarticle = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -216,5 +219,22 @@ class Article
     public function getNotes()
     {
         return $this->notes;
+    }
+
+    public function addSignalementarticle(\BlogBundle\Entity\Signalementarticle $signalementsarticle)
+    {
+        $this->signalementsarticle[] = $signalementsarticle;
+
+        return $this;
+    }
+
+    public function removeSignalementarticle(\BlogBundle\Entity\Signalementarticle $signalementsarticle)
+    {
+        $this->signalementsarticle->removeElement($signalementsarticle);
+    }
+
+    public function getSignalementarticle()
+    {
+        return $this->signalementsarticle;
     }
 }

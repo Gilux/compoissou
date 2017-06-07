@@ -17,6 +17,21 @@ class Signalementarticle
      */
     private $contenu;
 
+    private $utilisateur;
+
+    private $article;
+
+    public function setArticle($article)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    public function getArticle()
+    {
+        return $this->article;
+    }
 
     /**
      * Get id
@@ -50,5 +65,17 @@ class Signalementarticle
     public function getContenu()
     {
         return $this->contenu;
+    }
+
+    public function setUtilisateur($utilisateur)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
     }
 }

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Signalements d'articles</h1>
+
+    {% if signalementarticles %}
+        <table>
+            <thead>
+            <tr>
+                <th>Contenu</th>
+                <th>Sur l'article</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for signalementarticle in signalementarticles %}
+                <tr>
+                    <td>{{ signalementarticle.contenu }}</td>
+                    <td>
+                        <a href="{{ path('article_show', { 'id': signalementarticle.article.id }) }}">
+                            {{ signalementarticle.article.titre }}
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('signalementarticle_edit', { 'id': signalementarticle.id }) }}">Éditer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">Vous n'avez fait aucun signalement</p>
+    {% endif %}
+{% endblock %}
+

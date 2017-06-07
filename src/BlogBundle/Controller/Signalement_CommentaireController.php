@@ -31,8 +31,19 @@ class Signalement_CommentaireController extends Controller
      * Creates a new signalement_Commentaire entity.
      *
      */
-    public function newAction(Request $request, $idComm)
+    public function newAction(Request $request, $idArticle, $idComm)
     {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository('BlogBundle:Article')->find($idArticle);
+
+        //Erreur si l'article ne correspond pas au commentaire
+        $commentaires = $article->getCommentaires();
+        $tab = array();
+        foreach($commentaires as $comm)
+            array_push($tab, $comm->getId());
+        if(!in_array($idComm, $tab))
+            throw $this->createAccessDeniedException('Commentaire introuvable !');
+
         $signalement_Commentaire = new Signalementcommentaire();
         $form = $this->createForm('BlogBundle\Form\SignalementcommentaireType', $signalement_Commentaire);
         $form->handleRequest($request);
@@ -46,6 +57,14 @@ class Signalement_CommentaireController extends Controller
 
             $em->persist($signalement_Commentaire);
             $em->flush();
+
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = \Symfony\Component\Security\Acl\Domain\ObjectIdentity::fromDomainObject($signalement_Commentaire);
+            $acl = $aclProvider->createAcl($objectIdentity);
+            $user = $this->getUser();
+            $securityIdentity = \Symfony\Component\Security\Acl\Domain\UserSecurityIdentity::fromAccount($user);
+            $acl->insertObjectAce($securityIdentity, \Symfony\Component\Security\Acl\Permission\MaskBuilder::MASK_OWNER);
+            $aclProvider->updateAcl($acl);
 
             return $this->redirectToRoute('signalement_index');
         }
@@ -62,6 +81,10 @@ class Signalement_CommentaireController extends Controller
      */
     public function editAction(Request $request, Signalementcommentaire $signalement_Commentaire)
     {
+        $this->denyAccessUnlessGranted('EDIT', $signalement_Commentaire, 'Vous ne pouvez pas éditer ce signalement !');
+        if(!$this->isGranted('EDIT', $signalement_Commentaire) && !$this->isGranted('ROLE_ADMIN'))
+            throw $this->createAccessDeniedException('Impossible de visionner cette page.');
+
         $deleteForm = $this->createDeleteForm($signalement_Commentaire);
         $editForm = $this->createForm('BlogBundle\Form\SignalementcommentaireType', $signalement_Commentaire);
         $editForm->handleRequest($request);
@@ -110,7 +133,7 @@ class Signalement_CommentaireController extends Controller
             ->setAction($this->generateUrl('signalement_delete', array('id' => $signalement_Commentaire->getId())))
             ->setMethod('DELETE')
             ->getForm()
-        ;
+            ;
     }
 
     public function messignalementsAction(){

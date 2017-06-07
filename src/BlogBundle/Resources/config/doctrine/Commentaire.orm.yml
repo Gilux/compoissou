@@ -29,4 +29,5 @@ BlogBundle\Entity\Commentaire:
         signalementscommentaire:
             targetEntity: Signalementcommentaire
             mappedBy: commentaire
+            cascade: ["remove"]
     lifecycleCallbacks: {  }

@@ -12,4 +12,14 @@ BlogBundle\Entity\Signalementarticle:
         contenu:
             type: text
             column: Contenu
+
+    manyToOne:
+        article:
+            targetEntity: Article
+            inversedBy: signalementsarticle
+
+        utilisateur:
+            targetEntity: User
+            inversedBy: signalementsarticle
+
     lifecycleCallbacks: {  }

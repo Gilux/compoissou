@@ -9,8 +9,8 @@ signalement_show:
     methods:  GET
 
 signalement_new:
-    path:     /new/{idComm}
-    defaults: { _controller: "BlogBundle:Signalement_Commentaire:new", idComm: null }
+    path:     /new/{idArticle}/{idComm}
+    defaults: { _controller: "BlogBundle:Signalement_Commentaire:new", idArticle: null, idComm: null }
     methods:  [GET, POST]
 
 signalement_edit:

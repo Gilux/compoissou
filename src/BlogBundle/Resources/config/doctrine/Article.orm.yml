@@ -32,9 +32,15 @@ BlogBundle\Entity\Article:
         commentaires:
             targetEntity: Commentaire
             mappedBy: article
+            cascade: ["remove"]
 
         notes:
             targetEntity: Note
+            mappedBy: article
+            cascade: ["remove"]
+
+        signalementsarticle:
+            targetEntity: Signalementarticle
             mappedBy: article
 
     manyToMany:

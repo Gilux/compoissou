@@ -30,11 +30,16 @@ BlogBundle\Entity\User:
             type: string
             length: 255
             column: Avatar
+            nullable: true
 
     manyToMany:
         roles:
             targetEntity: Role
             inversedBy: users
+
+        articlesLus:
+            targetEntity: Article
+            mappedBy: luPar
 
     oneToMany:
         themeassociation:

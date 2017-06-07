@@ -207,17 +207,23 @@ class User implements UserInterface, \Serializable
      */
     protected $themeassociation;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    protected $articlesLus;
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->themeassociation = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roles = new ArrayCollection();
+        $this->themeassociation = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+        $this->notes = new ArrayCollection();
+        $this->articlesLus = new ArrayCollection();
     }
 
     /**
@@ -275,6 +281,23 @@ class User implements UserInterface, \Serializable
         return $this->articles;
     }
 
+    public function addArticlelu(\BlogBundle\Entity\Article $article)
+    {
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    public function removeArticlelu(\BlogBundle\Entity\Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    public function getArticleslus()
+    {
+        return $this->articles;
+    }
+
     public function addNote(\BlogBundle\Entity\Note $note)
     {
         $this->notes[] = $note;
@@ -292,6 +315,6 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return $this->prenom;
+        return $this->prenom . " " . $this->nom;
     }
 }

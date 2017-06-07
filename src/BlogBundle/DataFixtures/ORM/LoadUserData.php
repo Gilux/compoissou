@@ -64,7 +64,7 @@ class LoadUserData implements FixtureInterface
         $thematique->setNom("Mathématiques");
         $manager->persist($thematique);
 
-
+        $manager->flush();
 
         /*$userAdmin = new User();
         $userAdmin->setLogin('lecteur@blog.fr');

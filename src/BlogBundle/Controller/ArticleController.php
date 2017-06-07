@@ -3,6 +3,7 @@
 namespace BlogBundle\Controller;
 
 use BlogBundle\Entity\Article;
+use BlogBundle\Entity\Commentaire;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -60,7 +61,6 @@ class ArticleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $article->setDateCreation(new \DateTime());
             $article->setDateModif(new \DateTime());
             $article->setUtilisateur($this->getUser());
@@ -90,7 +90,7 @@ class ArticleController extends Controller
      * Finds and displays a article entity.
      *
      */
-    public function showAction(Article $article)
+    public function showAction(Article $article, Request $request)
     {
         /* Afficher l'article si :
          *  - l'utilisateur à le droit de vision (ACE)
@@ -121,10 +121,25 @@ class ArticleController extends Controller
         }
 
 
+        $commentaire = new Commentaire();
+        $form = $this->createForm('BlogBundle\Form\CommentaireType', $commentaire);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentaire->setDate(new \DateTime());
+            $commentaire->setArticle($article);
+            $commentaire->setUtilisateur($this->getUser());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($commentaire);
+            $em->flush();
+        }
+
 
         return $this->render('BlogBundle:Article:show.html.twig', array(
             'article' => $article,
             'moyenne' => round($moyenne,2),
+            'edit_form' => $form->createView(),
             'delete_form' => $deleteForm->createView()
         ));
     }

@@ -48,4 +48,8 @@ BlogBundle\Entity\Article:
             targetEntity: Theme
             inversedBy: articles
 
+        luPar:
+            targetEntity: User
+            inversedBy: articlesLus
+
     lifecycleCallbacks: {  }

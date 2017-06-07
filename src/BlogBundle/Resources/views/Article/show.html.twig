@@ -71,6 +71,11 @@
             <h3>Commentaires</h3>
         </div>
 
+        {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <input class="btn btn-info" type="submit" value="Créer" />
+        {{ form_end(edit_form) }}
+
         <div class="col-xs-12">
             <ul class="media-list">
                 {% for com in article.commentaires %}

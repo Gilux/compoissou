@@ -2,6 +2,8 @@
 
 namespace BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Article
  */
@@ -42,16 +44,19 @@ class Article
 
     private $signalementsarticle;
 
+    private $luPar;
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->themes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->signalementsarticle = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->themes = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+        $this->notes = new ArrayCollection();
+        $this->signalementsarticle = new ArrayCollection();
+        $this->luPar = new ArrayCollection();
     }
 
     /**
@@ -221,14 +226,14 @@ class Article
         return $this->notes;
     }
 
-    public function addSignalementarticle(\BlogBundle\Entity\Signalementarticle $signalementsarticle)
+    public function addSignalementarticle(Signalementarticle $signalementsarticle)
     {
         $this->signalementsarticle[] = $signalementsarticle;
 
         return $this;
     }
 
-    public function removeSignalementarticle(\BlogBundle\Entity\Signalementarticle $signalementsarticle)
+    public function removeSignalementarticle(Signalementarticle $signalementsarticle)
     {
         $this->signalementsarticle->removeElement($signalementsarticle);
     }
@@ -237,4 +242,20 @@ class Article
     {
         return $this->signalementsarticle;
     }
+
+    public function getLecteurs()
+    {
+        return $this->luPar;
+    }
+
+    public function addLecteur(User $user)
+    {
+        $this->luPar[] = $user;
+    }
+
+    public function removeLecteur(User $user)
+    {
+        $this->luPar->removeElement($user);
+    }
+
 }

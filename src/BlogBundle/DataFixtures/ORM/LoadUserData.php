@@ -47,22 +47,27 @@ class LoadUserData implements FixtureInterface
 
         $thematique = new Theme();
         $thematique->setNom("Informatique");
+        $thematique->setDescription("Thématique consacrée à l'informatique");
         $manager->persist($thematique);
 
         $thematique = new Theme();
         $thematique->setNom("Botanique");
+        $thematique->setDescription("SMOKE WEED EVERYDAY !!1!111");
         $manager->persist($thematique);
 
         $thematique = new Theme();
         $thematique->setNom("Électronique");
+        $thematique->setDescription("C'est trivial.");
         $manager->persist($thematique);
 
         $thematique = new Theme();
         $thematique->setNom("Mécanique");
+        $thematique->setDescription("Pour apprendre à être un meilleur conducteur que Claude François");
         $manager->persist($thematique);
 
         $thematique = new Theme();
         $thematique->setNom("Mathématiques");
+        $thematique->setDescription("Ca aussi c'est trivial");
         $manager->persist($thematique);
 
         $manager->flush();

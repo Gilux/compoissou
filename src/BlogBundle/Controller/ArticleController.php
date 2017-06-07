@@ -178,6 +178,16 @@ class ArticleController extends Controller
         return $this->redirectToRoute('article_index');
     }
 
+
+    /*public function luAction($article_id)
+    {
+       $entityManager = $this->getDoctrine()->getManager();
+       $ArticleRepository = $entityManager->getRepository('BlogBundle:Article');
+       $article = $ArticleRepository->find($article_id);
+
+
+    }*/
+
     /**
      * Creates a form to delete a article entity.
      *

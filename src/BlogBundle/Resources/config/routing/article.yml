@@ -22,3 +22,7 @@ article_delete:
     path:     /{id}/delete
     defaults: { _controller: "BlogBundle:Article:delete" }
     methods:  DELETE
+
+article_lu:
+    path:     /{article_id}/lu
+    defaults: { _controller: "BlogBundle:Article:lu" }

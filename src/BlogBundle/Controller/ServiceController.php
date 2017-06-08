@@ -3,45 +3,26 @@
 namespace BlogBundle\Controller;
 
 use BlogBundle\Entity\Article;
+use BlogBundle\Entity\User;
+
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class UtilisateurController extends Controller
+class ServiceController extends Controller
 {
-    public function profilAction($id)
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
     {
-        $user = $this->getUser();
-
-        $roles = $user->getRoles();
-
-        return $this->render('BlogBundle:Utilisateur:profil.html.twig', array(
-            "id" => $id,
-            "test" => "ISSOU",
-            "roles" => $roles
-        ));
+        $this->container = $container;
     }
 
-    public function widgetAction()
-    {
-        $user = $this->getUser();
-        $roles = $user->getRoles();
-
-        $strRoles = array();
-        foreach($roles as $role)
-        {
-            $strRoles[] = $role->getRole();
-        }
-
-        return $this->render('BlogBundle:Utilisateur:widget.html.twig', array(
-            "user" => $user,
-            "strRoles" => implode(", ",$strRoles)
-        ));
-    }
-
-    public function peutLireArticle(Utilisateur $utilisateur, Article $article)
+    public function peutLireArticle(User $utilisateur, Article $article)
     {
         $themes = $article->getThemes();
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get("doctrine")->getManager();
         $choixthemeRepository = $em->getRepository("BlogBundle:Choixtheme");
 
         // Récupère une liste d'objets Theme, pour chacun on va vérifier si un objet Choixtheme correspond à l'auteur et au thème. Si oui, c'est bon

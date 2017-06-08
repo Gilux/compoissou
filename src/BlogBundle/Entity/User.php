@@ -264,6 +264,11 @@ class User implements UserInterface, \Serializable
         return $this->themeassociation->toArray();;
     }
 
+    public function getChoixthemesToCollection()
+    {
+        return $this->themeassociation;
+    }
+
     public function addArticle(\BlogBundle\Entity\Article $article)
     {
         $this->articles[] = $article;

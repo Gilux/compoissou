@@ -4,6 +4,7 @@ namespace BlogBundle\Controller;
 
 use BlogBundle\Entity\Article;
 use BlogBundle\Entity\Commentaire;
+use Monolog\Handler\Curl\Util;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,6 +57,8 @@ class ArticleController extends Controller
      */
     public function newAction(Request $request)
     {
+        //$authorizationChecker = $this->get('security.authorization_checker');
+
         $article = new Article();
         $form = $this->createForm('BlogBundle\Form\ArticleType', $article);
         $form->handleRequest($request);
@@ -102,6 +105,13 @@ class ArticleController extends Controller
         if(!$this->isGranted('VIEW', $article) && !$this->isGranted('ROLE_LECTEUR'))
             throw $this->createAccessDeniedException('Impossible de visionner cette page.');
 
+        // On appelle le service app.serviceController et sa fonction peutLireArticle qui va comparer les choix de catégories de l'utilisateur et celles de l'article
+        $serviceController = $this->get('app.serviceController');
+        if(!$serviceController->peutLireArticle($this->getUser(),$article))
+        {
+            throw $this->createAccessDeniedException('Impossible de visionner cet article, il ne fait pas partie de vos catégories.');
+        }
+
         $deleteForm = $this->createDeleteForm($article);
 
         $notes = $article->getNotes();
@@ -130,23 +140,12 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid() && $this->isGranted('ROLE_CRITIQUE')) {
             // On vérifie que l'utilisateur est bien en droit de poster un commentaire ici
             $droitPost = false;
-            echo "Check";
-            foreach($article->getThemes() as $theme)
+            $serviceController = $this->get('serviceController');
+            if($serviceController->peutCommenterArticle($this->getUser(),$article))
             {
-                echo "<br>" . $theme->getNom();
-
-                if(!$droitPost)
-                {
-                    // Pour chacun des thèmes de l'article, on regarde s'il fait partie des thèmes de l'utilisateur
-                    $choixtheme = $em->getRepository('BlogBundle:Choixtheme')->findByUserAndTheme($this->getUser(),$theme);
-
-                    // Si le choix de l'utilisateur existe et qu'il est expert
-                    if(!is_null($choixtheme) && $choixtheme->getExpert() == true)
-                    {
-                        $droitPost = true;
-                    }
-                }
+                $droitPost = true;
             }
+
 
             if($droitPost)
             {
@@ -160,7 +159,7 @@ class ArticleController extends Controller
             }
             else
             {
-                die("pas le droit de commenter...");
+                throw $this->createAccessDeniedException('Impossible de commenter cet article.');
             }
 
         }

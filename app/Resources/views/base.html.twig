@@ -52,11 +52,13 @@
                                             <i class="glyphicon glyphicon-th-list"></i>
                                             Mes thématiques </a>
                                     </li>
+                                    {% if is_granted("ROLE_AUTEUR") %}
                                     <li class="{% if app.request.attributes.get('_route') == 'article_index' %}active{% endif %}">
                                         <a href="{{ path("article_index") }}">
                                             <i class="glyphicon glyphicon-th-list"></i>
                                             Afficher vos articles </a>
                                     </li>
+                                    {% endif %}
                                 </ul>
                             </li>
                             <li class="dropdown {% if app.request.attributes.get('_route') == 'utilisateur_profil' or app.request.attributes.get('_route') == "thematiques_list" %}active{% endif %}">

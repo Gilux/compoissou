@@ -107,7 +107,7 @@ class ArticleController extends Controller
 
         // On appelle le service app.serviceController et sa fonction peutLireArticle qui va comparer les choix de catégories de l'utilisateur et celles de l'article
         $serviceController = $this->get('app.serviceController');
-        if(!$serviceController->peutLireArticle($this->getUser(),$article))
+        if(!$serviceController->peutLireArticle($this->getUser(),$article) && $this->getUser()->getId() != $article->getUtilisateur()->getId())
         {
             throw $this->createAccessDeniedException('Impossible de visionner cet article, il ne fait pas partie de vos catégories.');
         }
@@ -229,6 +229,11 @@ class ArticleController extends Controller
        $entityManager = $this->getDoctrine()->getManager();
        $ArticleRepository = $entityManager->getRepository('BlogBundle:Article');
        $article = $ArticleRepository->find($article_id);
+
+       $article->addLecteur($this->getUser());
+       $entityManager->persist($article);
+       $entityManager->flush();
+       return $this->redirectToRoute("blog_homepage");
     }
 
     /**

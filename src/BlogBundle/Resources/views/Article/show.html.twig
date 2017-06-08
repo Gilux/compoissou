@@ -62,12 +62,15 @@
     <div class="row lead">
         <div class="col-xs-12">
             Moyenne : <span id="moyenne">{{ moyenne }}/5</span>
-            {% if article.utilisateur.login != app.user.username and is_granted('ROLE_CRITIQUE') %}
+            {% if article.utilisateur.login != app.user.username and is_granted('ROLE_LECTEUR') %}
                 <div id="stars" class="starrr"></div>
                 Votre note : <span id="count">0</span>/5
                 <button class="btn btn-primary btn-sm" id="sendNote">Ok</button>
-                <a class="btn btn-primary btn-sm" href="{{ path('article_lu', {'article_id': article.id }) }}"  >Signaler comme lu</a> {% if lu %} (déjà lu) {% endif %}
+
             {% endif %}
+        </div>
+        <div class="col-xs-12">
+            <a class="btn btn-primary btn-sm" href="{{ path('article_lu', {'article_id': article.id }) }}"  >Signaler comme lu</a> {% if lu %} (déjà lu) {% endif %}
         </div>
     </div>
 

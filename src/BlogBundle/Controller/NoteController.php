@@ -21,31 +21,41 @@ class NoteController extends Controller
 
         $article = $articleRepository->findOneById($id);
 
-        $noteObj = $noteRepository->findByUserAndArticle($this->getUser(),$article);
-
-        $em = $this->getDoctrine()->getManager();
-
-        $reponse["status"] = null;
-
-
-        // Si l'utilisateur n'a pas déjà noté cet article
-        if(is_null($noteObj))
+        $serviceController = $this->get('app.serviceController');
+        if($serviceController->peutCommenterArticle($this->getUser(),$article) && $this->isGranted("ROLE_CRITIQUE"))
         {
-            $newNote = new Note();
-            $newNote->setNote($note);
-            $newNote->setUtilisateur($this->getUser());
-            $newNote->setArticle($article);
-            $em->persist($newNote);
-            $em->flush();
-            $reponse["status"] = "create";
+            $noteObj = $noteRepository->findByUserAndArticle($this->getUser(),$article);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $reponse["status"] = null;
+
+
+            // Si l'utilisateur n'a pas déjà noté cet article
+            if(is_null($noteObj))
+            {
+                $newNote = new Note();
+                $newNote->setNote($note);
+                $newNote->setUtilisateur($this->getUser());
+                $newNote->setArticle($article);
+                $em->persist($newNote);
+                $em->flush();
+                $reponse["status"] = "create";
+            }
+            else // Sinon il s'agit d'une modification, on met la note à jour
+            {
+                $noteObj->setNote($note);
+                $em->persist($noteObj);
+                $em->flush();
+                $reponse["status"] = "update";
+            }
         }
-        else // Sinon il s'agit d'une modification, on met la note à jour
+        else
         {
-            $noteObj->setNote($note);
-            $em->persist($noteObj);
-            $em->flush();
-            $reponse["status"] = "update";
+            $reponse["status"] = "403";
         }
+
+
 
 
         $notes = $article->getNotes();

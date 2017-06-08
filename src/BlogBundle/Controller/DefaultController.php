@@ -21,11 +21,22 @@ class DefaultController extends Controller
             if(count($articlesAuteur) != 0)
                 $retour = array("articlesAuteur" => $articlesAuteur);
         }
-        else
+        else if($this->isGranted("ROLE_LECTEUR") || $this->isGranted("ROLE_CRITIQUE"))
         {
             $repositoryArticle = $em->getRepository("BlogBundle:Article");
-            $articlesAuteur = $repositoryArticle->findAll();
-            $retour = array("articlesAuteur" => $articlesAuteur);
+            $articles_raw = $repositoryArticle->findAll();
+
+            $serviceController = $this->get('app.serviceController');
+
+            $articles = array();
+            foreach($articles_raw as $article)
+            {
+                if(!$this->getUser()->aLuArticle($article) && $serviceController->peutLireArticle($this->getUser(),$article))
+                {
+                    $articles[] = $article;
+                }
+            }
+            $retour = array("articlesAuteur" => $articles);
         }
 
 

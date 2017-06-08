@@ -39,7 +39,7 @@ class ServiceController extends Controller
         return false;
     }
 
-    public function peutCommenterArticle(Utilisateur $utilisateur, Article $article)
+    public function peutCommenterArticle(User $utilisateur, Article $article)
     {
         $themes = $article->getThemes();
 

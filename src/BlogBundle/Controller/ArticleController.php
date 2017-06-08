@@ -230,10 +230,20 @@ class ArticleController extends Controller
        $ArticleRepository = $entityManager->getRepository('BlogBundle:Article');
        $article = $ArticleRepository->find($article_id);
 
-       $article->addLecteur($this->getUser());
-       $entityManager->persist($article);
-       $entityManager->flush();
-       return $this->redirectToRoute("blog_homepage");
+       if(!$this->getUser()->aLuArticle($article))
+       {
+            $article->addLecteur($this->getUser());
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+       }
+       else
+       {
+            $article->removeLecteur($this->getUser());
+            $entityManager->persist($article);
+            $entityManager->flush();
+       }
+        return $this->redirectToRoute("blog_homepage");
     }
 
     /**

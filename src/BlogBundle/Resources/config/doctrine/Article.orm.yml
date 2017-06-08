@@ -42,6 +42,7 @@ BlogBundle\Entity\Article:
         signalementsarticle:
             targetEntity: Signalementarticle
             mappedBy: article
+            cascade: ["remove"]
 
     manyToMany:
         themes:

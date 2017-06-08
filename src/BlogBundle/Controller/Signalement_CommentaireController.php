@@ -81,7 +81,10 @@ class Signalement_CommentaireController extends Controller
      */
     public function editAction(Request $request, Signalementcommentaire $signalement_Commentaire)
     {
-        $this->denyAccessUnlessGranted('EDIT', $signalement_Commentaire, 'Vous ne pouvez pas éditer ce signalement !');
+        /*Entre si
+         * - l'utilisateur possède le signalement
+         * - l'utilisateur est ADMIN
+         */
         if(!$this->isGranted('EDIT', $signalement_Commentaire) && !$this->isGranted('ROLE_ADMIN'))
             throw $this->createAccessDeniedException('Impossible de visionner cette page.');
 

@@ -70,6 +70,13 @@ class SignalementarticleController extends Controller
      */
     public function editAction(Request $request, Signalementarticle $signalementarticle)
     {
+        /*Entre si
+         * - l'utilisateur possède le signalement
+         * - l'utilisateur est ADMIN
+         */
+        if(!$this->isGranted('EDIT', $signalementarticle) && !$this->isGranted('ROLE_ADMIN'))
+            throw $this->createAccessDeniedException('Impossible de visionner cette page.');
+
         $deleteForm = $this->createDeleteForm($signalementarticle);
         $editForm = $this->createForm('BlogBundle\Form\SignalementarticleType', $signalementarticle);
         $editForm->handleRequest($request);

@@ -303,6 +303,11 @@ class User implements UserInterface, \Serializable
         return $this->articles;
     }
 
+    public function aLuArticle(Article $article)
+    {
+        return $this->articlesLus->contains($article);
+    }
+
     public function addNote(\BlogBundle\Entity\Note $note)
     {
         $this->notes[] = $note;

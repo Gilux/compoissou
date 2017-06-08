@@ -140,7 +140,7 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid() && $this->isGranted('ROLE_CRITIQUE')) {
             // On vérifie que l'utilisateur est bien en droit de poster un commentaire ici
             $droitPost = false;
-            $serviceController = $this->get('serviceController');
+            $serviceController = $this->get('app.serviceController');
             if($serviceController->peutCommenterArticle($this->getUser(),$article))
             {
                 $droitPost = true;
@@ -169,7 +169,8 @@ class ArticleController extends Controller
             'article' => $article,
             'moyenne' => round($moyenne,2),
             'edit_form' => $form->createView(),
-            'delete_form' => $deleteForm->createView()
+            'delete_form' => $deleteForm->createView(),
+            'lu' => $this->getUser()->aLuArticle($article)
         ));
     }
 

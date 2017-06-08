@@ -66,7 +66,7 @@
                 <div id="stars" class="starrr"></div>
                 Votre note : <span id="count">0</span>/5
                 <button class="btn btn-primary btn-sm" id="sendNote">Ok</button>
-                <a class="btn btn-primary btn-sm" href="{{ path('article_lu', {'article_id': article.id }) }}"  >Signaler comme lu</a>
+                <a class="btn btn-primary btn-sm" href="{{ path('article_lu', {'article_id': article.id }) }}"  >Signaler comme lu</a> {% if lu %} (déjà lu) {% endif %}
             {% endif %}
         </div>
     </div>

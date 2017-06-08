@@ -92,6 +92,8 @@ class ArticleController extends Controller
      */
     public function showAction(Article $article, Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         /* Afficher l'article si :
          *  - l'utilisateur à le droit de vision (ACE)
          *  - l'utilisateur à le rôle ROLE_LECTEUR
@@ -125,14 +127,42 @@ class ArticleController extends Controller
         $form = $this->createForm('BlogBundle\Form\CommentaireType', $commentaire);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commentaire->setDate(new \DateTime());
-            $commentaire->setArticle($article);
-            $commentaire->setUtilisateur($this->getUser());
+        if ($form->isSubmitted() && $form->isValid() && $this->isGranted('ROLE_CRITIQUE')) {
+            // On vérifie que l'utilisateur est bien en droit de poster un commentaire ici
+            $droitPost = false;
+            echo "Check";
+            foreach($article->getThemes() as $theme)
+            {
+                echo "<br>" . $theme->getNom();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($commentaire);
-            $em->flush();
+                if(!$droitPost)
+                {
+                    // Pour chacun des thèmes de l'article, on regarde s'il fait partie des thèmes de l'utilisateur
+                    $choixtheme = $em->getRepository('BlogBundle:Choixtheme')->findByUserAndTheme($this->getUser(),$theme);
+
+                    // Si le choix de l'utilisateur existe et qu'il est expert
+                    if(!is_null($choixtheme) && $choixtheme->getExpert() == true)
+                    {
+                        $droitPost = true;
+                    }
+                }
+            }
+
+            if($droitPost)
+            {
+                $commentaire->setDate(new \DateTime());
+                $commentaire->setArticle($article);
+                $commentaire->setUtilisateur($this->getUser());
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($commentaire);
+                $em->flush();
+            }
+            else
+            {
+                die("pas le droit de commenter...");
+            }
+
         }
 
 
@@ -194,14 +224,12 @@ class ArticleController extends Controller
     }
 
 
-    /*public function luAction($article_id)
+    public function luAction($article_id)
     {
        $entityManager = $this->getDoctrine()->getManager();
        $ArticleRepository = $entityManager->getRepository('BlogBundle:Article');
        $article = $ArticleRepository->find($article_id);
-
-
-    }*/
+    }
 
     /**
      * Creates a form to delete a article entity.

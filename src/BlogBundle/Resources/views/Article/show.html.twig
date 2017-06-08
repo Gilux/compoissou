@@ -42,13 +42,17 @@
 
         <div class="col-xs-12">
             <ul class="media-list">
-                {% for theme in article.themes %}
-                    <li class="media">
-                        <div class="media-body">
-                            <h4 class="media-heading">{{ theme.nom }} </h4>
-                        </div>
-                    </li>
-                {% endfor %}
+                {% if article.themes|length > 0 %}
+                    {% for theme in article.themes %}
+                        <li class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading">{{ theme.nom }} </h4>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <em>Aucun thème rattaché.</em>
+                {% endif %}
             </ul>
         </div>
 
@@ -57,8 +61,8 @@
 
     <div class="row lead">
         <div class="col-xs-12">
-            Moyenne : <span id="moyenne">{{ moyenne }}</span>
-            {% if article.utilisateur.login != app.user.username %}
+            Moyenne : <span id="moyenne">{{ moyenne }}/5</span>
+            {% if article.utilisateur.login != app.user.username and is_granted('ROLE_CRITIQUE') %}
                 <div id="stars" class="starrr"></div>
                 Votre note : <span id="count">0</span>/5
                 <button class="btn btn-primary btn-sm" id="sendNote">Ok</button>
@@ -67,15 +71,20 @@
         </div>
     </div>
 
+
     <div class="row">
         <div class="col-xs-12">
             <h3>Commentaires</h3>
         </div>
 
-        {{ form_start(edit_form) }}
-            {{ form_widget(edit_form) }}
-            <input class="btn btn-info" type="submit" value="Créer" />
-        {{ form_end(edit_form) }}
+        {% if is_granted('ROLE_CRITIQUE') %}
+            {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <input class="btn btn-info" type="submit" value="Créer" />
+            {{ form_end(edit_form) }}
+        {% endif %}
+
+
 
         <div class="col-xs-12">
             <ul class="media-list">
@@ -89,7 +98,10 @@
                         <div class="media-body">
                             <h4 class="media-heading">{{ com.utilisateur.prenom }} {{ com.utilisateur.nom }} <small>{{ com.date|date("d/m/Y H:i") }}</small></h4>
                             {{ com.contenu }}
+
+                            {% if com.utilisateur.id != app.user.id  %}
                             <a href="{{ path('signalement_new', {'idArticle':article.id, 'idComm':com.id}) }}" ><i class="glyphicon glyphicon-flash"></i></a>
+                            {% endif %}
                         </div>
                     </li>
                 {% endfor %}

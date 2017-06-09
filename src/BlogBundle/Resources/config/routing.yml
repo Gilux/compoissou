@@ -51,3 +51,7 @@ logout:
 note_article:
     path: /notes/add/{id}
     defaults: {_controller: BlogBundle:Note:add}
+
+mes_notes:
+    path: /mes-notes-et-commentaires
+    defaults: {_controller: BlogBundle:Utilisateur:notes}

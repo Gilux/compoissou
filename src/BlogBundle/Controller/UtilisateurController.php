@@ -79,4 +79,14 @@ class UtilisateurController extends Controller
         return false;
     }
 
+    /*
+     * notesAction
+     * Liste l'ensemble des notes et commentaires de l'utilisateur courant, s'il est critique
+     */
+    public function notesAction()
+    {
+        echo 'notes';
+        die();
+    }
+
 }

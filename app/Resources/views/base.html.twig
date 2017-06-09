@@ -14,7 +14,9 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-
+    <div class="issou" style="position:absolute; height:100px; width:100%; top:-100px; display:flex; justify-content: center; z-index:10; transition:all 10s ease;">
+        <img src="http://image.noelshack.com/fichiers/2016/47/1480085872-risitas-arbitre1.png" style="transition 1s ease;">
+    </div>
     {% block testlayout %}
     <div class="container-fluid">
         <div class="row profile">
@@ -47,6 +49,13 @@
                                             <i class="glyphicon glyphicon-pencil"></i>
                                             Informations personnelles </a>
                                     </li>
+                                    {% if is_granted("ROLE_CRITIQUE") %}
+                                    <li class="{% if app.request.attributes.get('_route') == 'utilisateur_profil' %}active{% endif %}">
+                                        <a href="{{ path("mes_notes") }}">
+                                            <i class="glyphicon glyphicon-pencil"></i>
+                                            Mes notes et commentaires </a>
+                                    </li>
+                                    {% endif %}
                                     <li class="{% if app.request.attributes.get('_route') == 'thematiques_list' %}active{% endif %}">
                                         <a href="{{ path("thematiques_list") }}">
                                             <i class="glyphicon glyphicon-th-list"></i>
@@ -99,6 +108,8 @@
     </div>
     {% endblock %}
 
+    <audio src="{{ asset("risitas.mp3") }}" class="hidden" id="risisong"></audio>
+
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -118,6 +129,35 @@
         $(".profile-usermenu > ul > li.dropdown > ul").click(function(e){
             e.stopPropagation();
         })
+    </script>
+
+    <script>
+        //Haut, haut, bas, bas, gauche, droite, gauche, droite, B, A
+        var k = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65],
+            n = 0;
+        $(document).keydown(function (e) {
+            if (e.keyCode === k[n++]) {
+                if (n === k.length) {
+                    document.getElementById('risisong').play();
+                    $(".issou").animate(
+                    {
+                        "top":"500px"
+                    },5000);
+
+                    setTimeout(function(){
+                        $(".issou").css({
+                            "transform":"scale(4)"
+                        },1000);
+                    },5000);
+
+                    n = 0;
+                    return false;
+                }
+            }
+            else {
+                n = 0;
+            }
+        });
     </script>
 
         {% block javascripts %}{% endblock %}

@@ -3,6 +3,7 @@
 namespace BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
@@ -24,7 +25,43 @@ class DefaultController extends Controller
         else if($this->isGranted("ROLE_LECTEUR") || $this->isGranted("ROLE_CRITIQUE"))
         {
             $repositoryArticle = $em->getRepository("BlogBundle:Article");
-            $articles_raw = $repositoryArticle->findAll();
+
+            $articles_raw = array();
+
+            if($this->isGranted("ROLE_CRITIQUE"))
+            {
+                $now = new \DateTime();
+                $now->modify("-30 days");
+
+                $articles_raw = $repositoryArticle->findAfter($now);
+            }
+            else if($this->isGranted("ROLE_LECTEUR"))
+            {
+                if(isset($_GET['tri']))
+                {
+                    if($_GET['tri'] == 'note')
+                    {
+                        $articles_raw = $repositoryArticle->findAll();
+                        echo "note";
+
+                    }
+                    else if($_GET['tri'] == 'date')
+                    {
+                        echo "date";
+                        $articles_raw = $repositoryArticle->findBy(array(),array('dateCreation' => "desc"));
+                    }
+                    else if($_GET['tri'] == "auteur")
+                    {
+                        echo "auteur";
+                        $articles_raw = $repositoryArticle->findBy(array(),array('auteur' => "asc"));
+                    }
+                }
+                else
+                {
+                    $articles_raw = $repositoryArticle->findAll();
+                }
+
+            }
 
             $serviceController = $this->get('app.serviceController');
 

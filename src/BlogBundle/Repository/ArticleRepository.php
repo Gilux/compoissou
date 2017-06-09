@@ -10,4 +10,18 @@ namespace BlogBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findAfter($date)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.dateCreation >= :date')
+            ->setParameter('date', $date)
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

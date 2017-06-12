@@ -8,6 +8,7 @@ use BlogBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ServiceController extends Controller
 {
@@ -58,6 +59,26 @@ class ServiceController extends Controller
         }
 
         return false;
+    }
+
+    public function choixRole($role)
+    {
+        $session = $this->container->get('session');
+        $session->set("role_choisi",$role);
+    }
+
+    public function getRole($user)
+    {
+        $session = $this->container->get('session');
+
+        if(is_null($session->get("role_choisi")))
+        {
+            $roles = $user->getRoles();
+            $session->set("role_choisi",$roles[0]->getRole());
+        }
+        return $session->get("role_choisi");
+
+
     }
 
 }

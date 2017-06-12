@@ -31,62 +31,30 @@ class UtilisateurController extends Controller
             $strRoles[] = $role->getRole();
         }
 
+        // Si l'utilisateur possède plusieurs rôles, on doit lui laisser le choix de celui qu'il utilise
+        $multipleRoles = false;
+        if(count($strRoles) > 1)
+        {
+            $multipleRoles = true;
+        }
+
+        // Récupérer le rôle choisi par l'utilisateur, et s'il n'y en a pas, lui en affecter un par défaut.
+        $service = $this->get("app.servicecontroller");
+        $rolechoisi = $service->getRole($this->getUser());
+
         return $this->render('BlogBundle:Utilisateur:widget.html.twig', array(
             "user" => $user,
-            "strRoles" => implode(", ",$strRoles)
+            "strRoles" => $strRoles,
+            "multipleRoles" => $multipleRoles,
+            "rolechoisi" => $rolechoisi
         ));
     }
 
-    public function peutLireArticle(Utilisateur $utilisateur, Article $article)
+    public function choixroleAction()
     {
-        $themes = $article->getThemes();
-
-        $em = $this->getDoctrine()->getManager();
-        $choixthemeRepository = $em->getRepository("BlogBundle:Choixtheme");
-
-        // Récupère une liste d'objets Theme, pour chacun on va vérifier si un objet Choixtheme correspond à l'auteur et au thème. Si oui, c'est bon
-        foreach($themes as $theme)
-        {
-            $choixtheme = $choixthemeRepository->findByUserAndTheme($utilisateur,$theme);
-
-            if(!is_null($choixtheme))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function peutCommenterArticle(Utilisateur $utilisateur, Article $article)
-    {
-        $themes = $article->getThemes();
-
-        $em = $this->getDoctrine()->getManager();
-        $choixthemeRepository = $em->getRepository("BlogBundle:Choixtheme");
-
-        // Récupère une liste d'objets Theme, pour chacun on va vérifier si un objet Choixtheme correspond à l'auteur et au thème. Si oui, c'est bon
-        foreach($themes as $theme)
-        {
-            $choixtheme = $choixthemeRepository->findByUserAndTheme($utilisateur,$theme);
-
-            if(!is_null($choixtheme) && $choixtheme->getExpert())
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /*
-     * notesAction
-     * Liste l'ensemble des notes et commentaires de l'utilisateur courant, s'il est critique
-     */
-    public function notesAction()
-    {
-        echo 'notes';
-        die();
+        $service = $this->get("app.servicecontroller");
+        $service->choixRole($_POST["role"]);
+        return $this->redirectToRoute("blog_homepage");
     }
 
 }

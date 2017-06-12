@@ -53,5 +53,17 @@ note_article:
     defaults: {_controller: BlogBundle:Note:add}
 
 mes_notes:
-    path: /mes-notes-et-commentaires
-    defaults: {_controller: BlogBundle:Utilisateur:notes}
+    path: /notes/mes-notes
+    defaults: {_controller: BlogBundle:Note:notes}
+
+note_delete:
+    path: /notes/delete/{id}
+    defaults: {_controller: BlogBundle:Note:delete}
+
+commentaire_delete:
+    path: /commentaires/delete/{id}
+    defaults: {_controller: BlogBundle:Commentaire:delete}
+
+choix_role:
+    path: /choix-role
+    defaults: {_controller: BlogBundle:Utilisateur:choixrole}

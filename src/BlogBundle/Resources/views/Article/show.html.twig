@@ -5,7 +5,9 @@
         <div class="col-xs-12">
             <h1>
                 Article
+                {% if(article.utilisateur.id != app.user.id) %}
                 <a href="{{ path('signalementarticle_new', {'idArticle':article.id}) }}" ><i class="glyphicon glyphicon-flash"></i></a>
+                {% endif %}
             </h1>
         </div>
     </div>
@@ -61,7 +63,9 @@
 
     <div class="row lead">
         <div class="col-xs-12">
+            {% if(app.session.get("role_choisi") != "ROLE_CRITIQUE" or article.utilisateur.id == app.user.id) %}
             Moyenne : <span id="moyenne">{{ moyenne }}/5</span>
+            {% endif %}
             {% if article.utilisateur.login != app.user.username and is_granted('ROLE_CRITIQUE') %}
                 <div id="stars" class="starrr"></div>
                 Votre note : <span id="count">0</span>/5
@@ -80,7 +84,7 @@
             <h3>Commentaires</h3>
         </div>
 
-        {% if is_granted('ROLE_CRITIQUE') %}
+        {% if app.session.get("role_choisi") == "ROLE_CRITIQUE" %}
             {{ form_start(edit_form) }}
                 {{ form_widget(edit_form) }}
                 <input class="btn btn-info" type="submit" value="Créer" />
@@ -88,7 +92,7 @@
         {% endif %}
 
 
-
+        {% if(app.session.get("role_choisi") != "ROLE_CRITIQUE" or article.utilisateur.id == app.user.id) %}
         <div class="col-xs-12">
             <ul class="media-list">
                 {% for com in article.commentaires %}
@@ -110,6 +114,27 @@
                 {% endfor %}
             </ul>
         </div>
+        {% elseif(app.session.get("role_choisi") == "ROLE_CRITIQUE")  %}
+        <div class="col-xs-12">
+            <ul class="media-list">
+                {% for com in article.commentaires %}
+                    {% if com.utilisateur.id == app.user.id %}
+                    <li class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object" src="{{ com.utilisateur.avatar }}" alt="avatar" style="width:64px; height:64px;">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ com.utilisateur.prenom }} {{ com.utilisateur.nom }} <small>{{ com.date|date("d/m/Y H:i") }}</small></h4>
+                            {{ com.contenu }}
+                        </div>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
 
     </div>
 

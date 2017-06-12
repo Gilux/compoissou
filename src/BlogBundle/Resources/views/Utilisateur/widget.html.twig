@@ -9,6 +9,16 @@
         {{ app.user.prenom }} {{ app.user.nom }}
     </div>
     <div class="profile-usertitle-job">
-        {{ strRoles }}
+        {{ app.session.get('role_choisi') }}
     </div>
+    {% if(multipleRoles) %}
+         <form id="choixRole" method="post" action="{{ path("choix_role") }}">
+             <select name="role">
+                 <option value="">Changer de rôle</option>
+                 {% for role in strRoles %}
+                     <option value="{{ role }}" {% if(role == app.session.get('role_choisi')) %} selected {% endif %}>{{ role }}</option>
+                 {% endfor %}
+             </select>
+         </form>
+    {% endif %}
 </div>

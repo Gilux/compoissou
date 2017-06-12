@@ -15,68 +15,68 @@ class DefaultController extends Controller
         /**
          * Si l'utilisateur à le ROLE_AUTEUR
          */
-        if($this->isGranted("ROLE_AUTEUR"))
+        $service = $this->get("app.servicecontroller");
+        $rolechoisi = $service->getRole($this->getUser());
+
+        $repositoryArticle = $em->getRepository("BlogBundle:Article");
+
+        $articles_raw = array();
+
+        if($rolechoisi == "ROLE_AUTEUR")
         {
-            $repositoryArticle = $em->getRepository("BlogBundle:Article");
-            $articlesAuteur = $repositoryArticle->findByUtilisateur($this->getUser());
-            if(count($articlesAuteur) != 0)
-                $retour = array("articlesAuteur" => $articlesAuteur);
+            $articles_raw = $repositoryArticle->findByUtilisateur($this->getUser());
         }
-        else if($this->isGranted("ROLE_LECTEUR") || $this->isGranted("ROLE_CRITIQUE"))
+        else if($rolechoisi == "ROLE_CRITIQUE")
         {
-            $repositoryArticle = $em->getRepository("BlogBundle:Article");
+            $now = new \DateTime();
+            $now->modify("-30 days");
 
-            $articles_raw = array();
-
-            if($this->isGranted("ROLE_CRITIQUE"))
+            $articles_raw = $repositoryArticle->findAfter($now);
+        }
+        else if($rolechoisi == "ROLE_LECTEUR")
+        {
+            if(isset($_GET['tri']))
             {
-                $now = new \DateTime();
-                $now->modify("-30 days");
-
-                $articles_raw = $repositoryArticle->findAfter($now);
-            }
-            else if($this->isGranted("ROLE_LECTEUR"))
-            {
-                if(isset($_GET['tri']))
-                {
-                    if($_GET['tri'] == 'note')
-                    {
-                        $articles_raw = $repositoryArticle->findAll();
-                        echo "note";
-
-                    }
-                    else if($_GET['tri'] == 'date')
-                    {
-                        echo "date";
-                        $articles_raw = $repositoryArticle->findBy(array(),array('dateCreation' => "desc"));
-                    }
-                    else if($_GET['tri'] == "auteur")
-                    {
-                        echo "auteur";
-                        $articles_raw = $repositoryArticle->findBy(array(),array('auteur' => "asc"));
-                    }
-                }
-                else
+                if($_GET['tri'] == 'note')
                 {
                     $articles_raw = $repositoryArticle->findAll();
+                    echo "note";
+
                 }
-
-            }
-
-            $serviceController = $this->get('app.serviceController');
-
-            $articles = array();
-            foreach($articles_raw as $article)
-            {
-                if(!$this->getUser()->aLuArticle($article) && $serviceController->peutLireArticle($this->getUser(),$article))
+                else if($_GET['tri'] == 'date')
                 {
-                    $articles[] = $article;
+                    echo "date";
+                    $articles_raw = $repositoryArticle->findBy(array(),array('dateCreation' => "desc"));
+                }
+                else if($_GET['tri'] == "auteur")
+                {
+                    echo "auteur";
+                    $articles_raw = $repositoryArticle->findBy(array(),array('auteur' => "asc"));
                 }
             }
-            $retour = array("articlesAuteur" => $articles);
+            else
+            {
+                $articles_raw = $repositoryArticle->findAll();
+            }
+
+        }
+        else if($rolechoisi == "ROLE_ADMIN")
+        {
+            $articles_raw = $repositoryArticle->findAll();
+            return $this->render('BlogBundle:Default:index.html.twig', array("articles" => $articles));
         }
 
+        $serviceController = $this->get('app.serviceController');
 
-        return $this->render('BlogBundle:Default:index.html.twig', $retour);
+        $articles = array();
+        foreach($articles_raw as $article)
+        {
+            if(!$this->getUser()->aLuArticle($article) && $serviceController->peutLireArticle($this->getUser(),$article) || $rolechoisi == "ROLE_AUTEUR")
+            {
+                $articles[] = $article;
+            }
+        }
+
+        return $this->render('BlogBundle:Default:index.html.twig', array("articles" => $articles));
     }
 }

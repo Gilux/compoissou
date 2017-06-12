@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ArticleController extends Controller
 {
+
+
     /**
      * Lists all article entities.
      *
@@ -96,17 +98,16 @@ class ArticleController extends Controller
     public function showAction(Article $article, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $serviceController = $this->get('app.serviceController');
         /* Afficher l'article si :
          *  - l'utilisateur à le droit de vision (ACE)
          *  - l'utilisateur à le rôle ROLE_LECTEUR
          * (Grâce à la hiérarchie les Critiques et les Admin peuvent le voir aussi)
          */
-        if(!$this->isGranted('VIEW', $article) && !$this->isGranted('ROLE_LECTEUR'))
+        if(!$this->isGranted('VIEW', $article) && $serviceController->getRole($this->getUser()) == 'ROLE_AUTEUR')
             throw $this->createAccessDeniedException('Impossible de visionner cette page.');
 
         // On appelle le service app.serviceController et sa fonction peutLireArticle qui va comparer les choix de catégories de l'utilisateur et celles de l'article
-        $serviceController = $this->get('app.serviceController');
         if(!$serviceController->peutLireArticle($this->getUser(),$article) && $this->getUser()->getId() != $article->getUtilisateur()->getId())
         {
             throw $this->createAccessDeniedException('Impossible de visionner cet article, il ne fait pas partie de vos catégories.');
@@ -136,12 +137,15 @@ class ArticleController extends Controller
         $commentaire = new Commentaire();
         $form = $this->createForm('BlogBundle\Form\CommentaireType', $commentaire);
         $form->handleRequest($request);
+        $serviceController = $this->get('app.serviceController');
 
-        if ($form->isSubmitted() && $form->isValid() && $this->isGranted('ROLE_CRITIQUE')) {
+        // 1ère vérification : est-ce que l'utilisateur a bien le rôle "critique"
+        if ($form->isSubmitted() && $form->isValid() && $serviceController->getRole($this->getUser()) == 'ROLE_CRITIQUE') {
             // On vérifie que l'utilisateur est bien en droit de poster un commentaire ici
             $droitPost = false;
-            $serviceController = $this->get('app.serviceController');
-            if($serviceController->peutCommenterArticle($this->getUser(),$article))
+
+            // Si l'utilisateur ne commente pas sur son propre article, et qu'il est bien en mesure de commenter en fonction des catégories choisies
+            if($serviceController->peutCommenterArticle($this->getUser(),$article) && $this->getUser()->getId() != $article->getUtilisateur()->getId())
             {
                 $droitPost = true;
             }

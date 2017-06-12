@@ -1,0 +1,60 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Mes notes et commentaires{% endblock %}
+
+{% block body %}
+    <h1>
+        Mes notes et commentaires
+    </h1>
+
+    <h2>Notes :</h2>
+        <table class="table">
+            <tr>
+                <th>Sur l'article</th>
+                <th>Note /5</th>
+                <th>Supprimer</th>
+            </tr>
+            {% for note in notes %}
+                <tr>
+                    <td><a href="{{ path("article_show", {id:note.article.id}) }}">{{ note.article.titre }}</a></td>
+                    <td>{{ note.note }}</td>
+                    <td>
+                        <form action="{{ path('note_delete', { 'id': note.id }) }}" method="post">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            {{ form_widget(deleteFormsNotes[note.id]) }}
+                            <button type="submit" class="btn btn-small">
+                                <i class="icon-trash"></i>
+                                Supprimer
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    <h2>Commentaires :</h2>
+    <table class="table">
+        <tr>
+            <th>Sur l'article</th>
+            <th>Contenu</th>
+            <th>Supprimer</th>
+        </tr>
+        {% for commentaire in commentaires %}
+            <tr>
+                <td><a href="{{ path("article_show", {id:commentaire.article.id}) }}">{{ commentaire.article.titre }}</a></td>
+                <td>{{ commentaire.contenu }}</td>
+                <td>
+                    <form action="{{ path('commentaire_delete', { 'id': commentaire.id }) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        {{ form_widget(deleteFormsComs[commentaire.id]) }}
+                        <button type="submit" class="btn btn-small">
+                            <i class="icon-trash"></i>
+                            Supprimer
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

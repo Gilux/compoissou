@@ -22,7 +22,14 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn btn-info" href="{{ path('signalementarticle_edit', { 'id': signalementarticle.id }) }}">Éditer</a>
+                        <form action="{{ path('signalementarticle_delete', { 'id': signalementarticle.id }) }}" method="post">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            {{ form_widget(deleteForms[signalementarticle.id]) }}
+                            <button type="submit" class="btn btn-small">
+                                <i class="icon-trash"></i>
+                                Supprimer
+                            </button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}

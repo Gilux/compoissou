@@ -1,4 +1,8 @@
 services:
     app.serviceController:
         class:     BlogBundle\Controller\ServiceController
-        arguments: ["@service_container"]
+        arguments: ["@service_container","@session"]
+
+    app.commentaireController:
+        class:    BlogBundle\Controller\CommentaireController
+        arguments: ["@service_container","@session"]

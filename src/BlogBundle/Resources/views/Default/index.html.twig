@@ -7,8 +7,8 @@
 {% block body %}
     <h1>Bienvenue sur le blog insoumis !</h1>
     <div class="row">
-        {% if articlesAuteur is defined %}
-            {% for article in articlesAuteur %}
+        {% if articles is defined %}
+            {% for article in articles %}
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
                     <div class="caption">

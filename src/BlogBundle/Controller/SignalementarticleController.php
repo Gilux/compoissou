@@ -22,8 +22,14 @@ class SignalementarticleController extends Controller
 
         $signalementarticles = $em->getRepository('BlogBundle:Signalementarticle')->findByUtilisateur($this->getUser());
 
+        $deleteForms = array();
+        foreach ($signalementarticles as $signalementarticle) {
+            $deleteForms[$signalementarticle->getId()] = $this->createDeleteForm($signalementarticle)->createView();
+        }
+
         return $this->render('BlogBundle:signalementarticle:index.html.twig', array(
             'signalementarticles' => $signalementarticles,
+            'deleteForms' => $deleteForms
         ));
     }
 

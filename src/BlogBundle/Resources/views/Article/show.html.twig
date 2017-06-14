@@ -73,9 +73,11 @@
 
             {% endif %}
         </div>
+        {% if(lu) %}
         <div class="col-xs-12">
             <a class="btn btn-primary btn-sm" href="{{ path('article_lu', {'article_id': article.id }) }}"  >Signaler comme lu</a> {% if lu %} (déjà lu) {% endif %}
         </div>
+        {% endif %}
     </div>
 
 
@@ -138,6 +140,7 @@
 
     </div>
 
+    {% if(app.session.get("role_choisi") == "ROLE_AUTEUR") %}
     <div class="row">
         <div class="col-xs-3">
             <ul class="list-group">
@@ -155,6 +158,7 @@
             </ul>
         </div>
     </div>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

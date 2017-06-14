@@ -168,13 +168,18 @@ class ArticleController extends Controller
 
         }
 
+        //C'est le propriétaire de l'article
+        if($this->isGranted('VIEW', $article))
+            $lu = false;
+        else
+            $lu = $this->getUser()->aLuArticle($article);
 
         return $this->render('BlogBundle:Article:show.html.twig', array(
             'article' => $article,
             'moyenne' => round($moyenne,2),
             'edit_form' => $form->createView(),
             'delete_form' => $deleteForm->createView(),
-            'lu' => $this->getUser()->aLuArticle($article)
+            'lu' => $lu
         ));
     }
 

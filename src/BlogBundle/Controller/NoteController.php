@@ -150,7 +150,7 @@ class NoteController extends Controller
 
 
     /**
-     * Deletes a article entity.
+     * Deletes a note entity.
      *
      */
     public function deleteAction(Request $request, Note $note)

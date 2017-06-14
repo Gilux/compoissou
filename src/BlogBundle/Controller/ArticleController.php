@@ -108,7 +108,7 @@ class ArticleController extends Controller
             throw $this->createAccessDeniedException('Impossible de visionner cette page.');
 
         // On appelle le service app.serviceController et sa fonction peutLireArticle qui va comparer les choix de catégories de l'utilisateur et celles de l'article
-        if(!$serviceController->peutLireArticle($this->getUser(),$article) && $this->getUser()->getId() != $article->getUtilisateur()->getId())
+        if(!$serviceController->peutLireArticle($this->getUser(),$article) && $this->getUser()->getId() != $article->getUtilisateur()->getId() && $serviceController->getRole($this->getUser()) != "ROLE_ADMIN")
         {
             throw $this->createAccessDeniedException('Impossible de visionner cet article, il ne fait pas partie de vos catégories.');
         }

@@ -46,6 +46,8 @@ class Article
 
     private $luPar;
 
+    private $moyenne; // $moyenne = valeur calculée non stockée
+
 
     /**
      * Constructor
@@ -256,6 +258,16 @@ class Article
     public function removeLecteur(User $user)
     {
         $this->luPar->removeElement($user);
+    }
+
+    public function setMoyenne($moyenne)
+    {
+        $this->moyenne = $moyenne;
+    }
+
+    public function getMoyenne()
+    {
+        return $this->moyenne;
     }
 
 }

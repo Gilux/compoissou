@@ -24,4 +24,36 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
             ->getResult()
             ;
     }
+
+    public function findRecherche($recherche = null, $date = null)
+    {
+        $qb = $this->createQueryBuilder('article');
+
+        if($recherche != null)
+        {
+            $qb->innerJoin('BlogBundle:User', 'u')
+                ->where('article.titre LIKE :recherche')
+                ->orWhere('u.nom LIKE :recherche')
+                ->setParameter('recherche', '%'.$recherche.'%');
+        }
+
+        if($date != null)
+        {
+            if($recherche == null)
+            {
+                $qb->where('article.dateCreation >= :date')
+                    ->setParameter('date', $date);
+            }
+            else
+            {
+                $qb->andWhere('article.dateCreation >= :date')
+                    ->setParameter('date', $date);
+            }
+
+        }
+
+        return $qb->getQuery()->getResult();
+
+
+    }
 }

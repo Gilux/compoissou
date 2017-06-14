@@ -26,7 +26,6 @@
                     {{ render(controller('BlogBundle:Utilisateur:widget')) }}
 
                     <div class="profile-userbuttons">
-                        <button type="button" class="btn btn-success btn-sm">Follow</button>
                         <a class="btn btn-danger btn-sm" href="{{ path("logout") }}">Logout</a>
                     </div>
                     <!-- END SIDEBAR BUTTONS -->
@@ -87,12 +86,6 @@
                                             Signalements Articles </a>
                                     </li>
                                 </ul>
-                            </li>
-
-                            <li>
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-flag"></i>
-                                    Help </a>
                             </li>
                         </ul>
                     </div>
@@ -167,6 +160,14 @@
                 if($("#choixRole option:selected").val() != "")
                 {
                     $("#choixRole").submit();
+                }
+            });
+
+            $("#sortingform").find("select").change(function(e){
+                e.preventDefault();
+                if($("#sortingform option:selected").val() != "")
+                {
+                    $("#sortingform").submit();
                 }
             });
         });

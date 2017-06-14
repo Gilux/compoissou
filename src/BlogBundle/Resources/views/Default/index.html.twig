@@ -7,6 +7,27 @@
 {% block body %}
     <h1>Bienvenue sur le blog insoumis !</h1>
     <div class="row">
+        <div class="col-xs-12">
+            <form method="post">
+                Recherche : <input type="text" placeholder="recherche" name="recherche" value="{{ recherche }}">
+                <input type="submit">
+            </form>
+                &nbsp;&nbsp;
+
+            <form method="get" id="sortingform" style="margin-bottom:10px;">
+                <select name="tri">
+                    <option></option>
+                    <option value="date">Par date</option>
+                    <option value="auteur">Par auteur</option>
+                    <option value="note">Par note<option>
+                </select>
+
+                <input type="radio" name="sens" value="asc" checked>Ascendant
+                <input type="radio" name="sens" value="desc">Descendant
+            </form>
+        </div>
+    </div>
+    <div class="row">
         {% if articles is defined %}
             {% for article in articles %}
             <div class="col-sm-6 col-md-4">

@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Lire un article
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-xs-12">
@@ -26,11 +30,11 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{% if article.dateCreation %}{{ article.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if article.dateCreation %}{{ article.dateCreation|date('d/m/Y H:i:s') }}{% endif %}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{% if article.dateModif %}{{ article.dateModif|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if article.dateModif %}{{ article.dateModif|date('d/m/Y H:i:s') }}{% endif %}</td>
                 </tr>
                 </tbody>
             </table>
@@ -140,7 +144,7 @@
 
     </div>
 
-    {% if(app.session.get("role_choisi") == "ROLE_AUTEUR") %}
+    {% if(app.session.get("role_choisi") == "ROLE_AUTEUR" or app.session.get("role_choisi") == "ROLE_ADMIN") %}
     <div class="row">
         <div class="col-xs-3">
             <ul class="list-group">

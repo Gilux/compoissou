@@ -87,6 +87,13 @@
                                     </li>
                                 </ul>
                             </li>
+                            {% if(app.session.get('role_choisi') == "ROLE_ADMIN") %}
+                            <li class="{% if app.request.attributes.get('_route') == 'user_index' %}active{% endif %}">
+                                <a href="{{ path('user_index') }}">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Administration des utilisateurs </a>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>
                     <!-- END MENU -->

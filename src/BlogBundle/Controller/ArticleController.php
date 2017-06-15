@@ -189,7 +189,11 @@ class ArticleController extends Controller
      */
     public function editAction(Request $request, Article $article)
     {
-        $this->denyAccessUnlessGranted('EDIT', $article, 'Vous ne pouvez pas éditer cet article !');
+        $serviceController = $this->get('app.serviceController');
+        if($serviceController->getRole($this->getUser()) != "ROLE_ADMIN")
+        {
+            $this->denyAccessUnlessGranted('EDIT', $article, 'Vous ne pouvez pas éditer cet article !');
+        }
 
         $deleteForm = $this->createDeleteForm($article);
         $editForm = $this->createForm('BlogBundle\Form\ArticleType', $article);

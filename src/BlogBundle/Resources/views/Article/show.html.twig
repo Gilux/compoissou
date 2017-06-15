@@ -66,7 +66,7 @@
             {% if(app.session.get("role_choisi") != "ROLE_CRITIQUE" or article.utilisateur.id == app.user.id) %}
             Moyenne : <span id="moyenne">{{ moyenne }}/5</span>
             {% endif %}
-            {% if article.utilisateur.login != app.user.username and is_granted('ROLE_CRITIQUE') %}
+            {% if article.utilisateur.login != app.user.username and app.session.get('role_choisi') == "ROLE_CRITIQUE" and serviceController.peutCommenterArticle(app.user,article) %}
                 <div id="stars" class="starrr"></div>
                 Votre note : <span id="count">0</span>/5
                 <button class="btn btn-primary btn-sm" id="sendNote">Ok</button>

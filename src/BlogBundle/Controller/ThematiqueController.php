@@ -98,7 +98,6 @@ class ThematiqueController extends Controller
         $thematiqueRepository = $em->getRepository("BlogBundle:Theme");
         $thematique = $thematiqueRepository->find($thematiqueID);
 
-        // TODO : Check sécurité, est-ce que la personne a le droit de bien modifier ces éléments ?
         if($lecteur == 0)
         {
             $choixtheme = $choixthemeRepository->findByUserAndTheme($this->getUser(),$thematique);

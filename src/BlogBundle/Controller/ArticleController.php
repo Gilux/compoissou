@@ -169,8 +169,8 @@ class ArticleController extends Controller
         }
 
         //C'est le propriétaire de l'article
-        if($this->isGranted('VIEW', $article))
-            $lu = false;
+        if($this->getUser()->getId() == $article->getUtilisateur()->getId())
+            $lu = -1;
         else
             $lu = $this->getUser()->aLuArticle($article);
 

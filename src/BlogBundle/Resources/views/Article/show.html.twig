@@ -73,7 +73,7 @@
 
             {% endif %}
         </div>
-        {% if(lu) %}
+        {% if(lu != -1) %}
         <div class="col-xs-12">
             <a class="btn btn-primary btn-sm" href="{{ path('article_lu', {'article_id': article.id }) }}"  >Signaler comme lu</a> {% if lu %} (déjà lu) {% endif %}
         </div>
